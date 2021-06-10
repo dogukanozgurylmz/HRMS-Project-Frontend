@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 import { Button, Container, Menu } from 'semantic-ui-react'
 
 export default function NavigationBar() {
@@ -6,7 +7,7 @@ export default function NavigationBar() {
         <div>
             <Menu fixed='top' inverted size='large'>
                 <Container>
-                    <Menu.Item name='HRMS' />
+                    <Menu.Item as={NavLink} to="/home" name='HRMS' />
                     <Menu.Item name='Home' />
                     <Menu.Item name='Job Postings' />
                     <Menu.Menu position='right'>
