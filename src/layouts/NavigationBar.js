@@ -5,20 +5,19 @@ import { Button, Container, Menu } from 'semantic-ui-react'
 export default function NavigationBar() {
     return (
         <div>
-            <Menu fixed='top' inverted size='large'>
+            <Menu size='large' fixed="top" pointing inverted color="black">
                 <Container>
-                    <Menu.Item as={NavLink} to="/home" name='HRMS' />
-                    <Menu.Item name='Home' />
-                    <Menu.Item name='Job Postings' />
-                    <Menu.Menu position='right'>
-                        <Menu.Item>
-                            <Button.Group>
-                                <Button>Sign In</Button>
-                                <Button.Or />
-                                <Button positive>Register</Button>
-                            </Button.Group>
-                        </Menu.Item>
-                    </Menu.Menu>
+                    <Menu.Item as={NavLink} to="/home" >HRMS</Menu.Item>
+                    <Menu.Item as={NavLink} to="/employers" >Employers</Menu.Item>
+                    <Menu.Item as={NavLink} to="/jobpostings" >Job Postings</Menu.Item>
+                    <Menu.Item position='right'>
+                        <Button >
+                            Log in
+                        </Button>
+                        <Button  style={{ marginLeft: '0.5em' }}>
+                            Sign Up
+                        </Button>
+                    </Menu.Item>
                 </Container>
             </Menu>
         </div>

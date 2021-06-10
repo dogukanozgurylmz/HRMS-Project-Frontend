@@ -17,7 +17,7 @@ export default function JobPostingList() {
             <Header color='grey' as="h2">
                 <Header.Content>Job Postings</Header.Content>
             </Header>
-            <Card.Group>
+            <Card.Group itemsPerRow={4}>
                 {
                     jobPostings.map(jobPosting => (
                         <Card>

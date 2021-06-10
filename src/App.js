@@ -10,8 +10,8 @@ import HomePage from './pages/HomePage'
 function App() {
   return (
     <div className="App">
-      <Route exact path='/home' component={HomePage} />
       <NavigationBar />
+      <Route exact path='/home' component={HomePage} />
       <Container className='main'>
         <Dashboard />
       </Container>
