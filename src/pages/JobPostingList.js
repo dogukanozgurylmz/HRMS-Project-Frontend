@@ -14,23 +14,20 @@ export default function JobPostingList() {
 
     return (
         <div>
-            <Header color='grey' as="h2">
-                <Header.Content>Job Postings</Header.Content>
+            <Header as="h1">
+                <Header.Content style={{color: "#5f86a0" }} >Job Postings</Header.Content>
             </Header>
-            <Card.Group itemsPerRow={4}>
+            <Card.Group itemsPerRow={3}>
                 {
                     jobPostings.map(jobPosting => (
-                        <Card>
+                        <Card key={jobPosting.id}>
                             <Card.Content>
                                 <Card.Header>{jobPosting.employerUser.companyName}</Card.Header>
                                 <Card.Meta>{jobPosting.employerUser.webAddress}</Card.Meta>
-                                <Card.Description>{jobPosting.description}</Card.Description>
                             </Card.Content>
                             <Card.Content >{jobPosting.jobPosition.position}</Card.Content>
                             <Card.Content >Salary: {jobPosting.minSalary} - {jobPosting.maxSalary} TL</Card.Content>
-                            <Card.Content >Open Position: {jobPosting.quota}</Card.Content>
                             <Card.Content >Şehir: {jobPosting.city.cityName}</Card.Content>
-                            <Card.Content >Starting Date: {jobPosting.releaseDate}</Card.Content>
                             <Card.Content >Application Deadline: {jobPosting.applicationDeadline}</Card.Content>
                             <Card.Content extra>
                                 <div className='ui one buttons'>
