@@ -1,33 +1,33 @@
 import React, { useEffect, useState } from 'react'
 import CityService from "../services/cityService";
 import { Dropdown, Select } from 'semantic-ui-react';
+import { Form } from 'formik-semantic-ui';
 
 export default function CityList() {
 
     const [cities, setCities] = useState([])
-
-    const [selectedCity, setSelectedCity] = useState("cities")
 
     useEffect(() => {
         let cityService = new CityService();
         cityService.getCity().then(result => setCities(result.data.data))
     }, []);
 
-    function getCity(e) {
-        cities.map(city => ({ key: city.id, text: city.cityName, value: city.cityName }))
-        console.log(e.target.options)
+    const handleChangeSemantic = (field, value) => {
+        console.log(field, value);
     }
 
-    const getCities = cities.map((city) => ({
-        key: city.id,
+    const citiesOptions = cities.map((city, index) => ({
+        key: index,
         text: city.cityName,
-        value: city.cityName,
-    }));
+        value: city.id
+    }))
 
 
     return (
         <div>
-            <Select onChange={getCity} placeholder='Cities' options={getCities} />
+            <Form.Group>
+                <Form.Dropdown required placeholder="Select City" selection search options={citiesOptions}/>
+            </Form.Group>
         </div>
     )
 }

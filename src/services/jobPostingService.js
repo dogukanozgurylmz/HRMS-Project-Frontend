@@ -6,8 +6,8 @@ export default class JobPostingService{
         return axios.get("http://localhost:8080/api/jobpostings/getall")
     }
 
-    newJobPosting(){
-        return axios.post("http://localhost:8080/api/jobpostings/add")
+    newJobPosting(jobPosting){
+        return axios.post("http://localhost:8080/api/jobpostings/add",jobPosting)
     }
 
 }
