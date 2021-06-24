@@ -54,7 +54,7 @@ export default function NewJobPosting() {
             maxSalary: Yup.number(),
             employerId: Yup.number(),
             cityId: Yup.number().required("City is not null"),
-            jobPositionId: Yup.string().required("Job position is not null"),
+            jobPositionId: Yup.number().required("Job position is not null"),
             workingTimeId: Yup.number().required("Working time is not null"),
             workTypeId: Yup.number().required("Work type is not null"),
         }),

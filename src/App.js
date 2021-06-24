@@ -1,6 +1,5 @@
 import './App.css';
 import 'semantic-ui-css/semantic.min.css'
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Dashboard from './layouts/Dashboard';
 import NavigationBar from './layouts/NavigationBar';
 import { Container } from 'semantic-ui-react';
