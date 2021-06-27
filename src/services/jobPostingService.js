@@ -14,8 +14,12 @@ export default class JobPostingService{
         return axios.get("http://localhost:8080/api/jobpostings/changeStatus?id="+id)
     }
 
-    getByIsActive(status){
-        return axios.get("http://localhost:8080/api/jobpostings/findByIsActive",status)
+    getByIsActiveTrue(){
+        return axios.get("http://localhost:8080/api/jobpostings/findByIsActive?status=true")
+    }
+
+    getByIsActiveFalse(){
+        return axios.get("http://localhost:8080/api/jobpostings/findByIsActive?status=false")
     }
 
     deleteJobPosting(id){

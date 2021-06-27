@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import JobPostingService from '../../services/jobPostingService'
 import { Button, Table } from 'semantic-ui-react'
-import { useHistory } from 'react-router-dom'
 
 export default function JobPostingApproval() {
 
-    const history = useHistory()
     let jobPostingService = new JobPostingService()
     
     let changeActive = (id) => {
@@ -25,7 +23,7 @@ export default function JobPostingApproval() {
     const [jobPostings, setJobPostings] = useState([])
 
     useEffect(() => {
-        jobPostingService.getByIsActive(false).then(result => setJobPostings(result.data.data))
+        jobPostingService.getByIsActiveFalse().then(result => setJobPostings(result.data.data))
     }, [])
 
     return (
