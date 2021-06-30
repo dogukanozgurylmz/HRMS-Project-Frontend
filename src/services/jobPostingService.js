@@ -25,5 +25,9 @@ export default class JobPostingService{
     deleteJobPosting(id){
         return axios.post("http://localhost:8080/api/jobpostings/delete?id="+id)
     }
+    
+    getJobPostingPage(pageNo, pageSize){
+        return axios.get(`http://localhost:8080/api/jobpostings/getallByPage?pageNo=${pageNo}&pageSize=${pageSize}`)
+    }
 
 }

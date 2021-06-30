@@ -12,14 +12,12 @@ import WorkTypeService from "../../services/workTypeService";
 
 export default function NewJobPosting() {
 
-    const [jobPostings, setJobPostings] = useState([])
     const [employerUsers, setEmployerUsers] = useState([])
     const [cities, setCities] = useState([])
     const [jobPositions, setJobPositions] = useState([])
     const [workingTimes, setWorkingTimes] = useState([])
     const [workTypes, setWorkTypes] = useState([])
 
-    const history = useHistory()
     useEffect(() => {
         let cityService = new CityService()
         cityService.getCity().then(result => setCities(result.data.data))
@@ -84,8 +82,6 @@ export default function NewJobPosting() {
 
             let jobPostingService = new JobPostingService();
             jobPostingService.newJobPosting(jobPostingModel).then((result) => result.data.data);
-            alert("Success")
-            history.push("/jobpostings")
         },
     });
 
