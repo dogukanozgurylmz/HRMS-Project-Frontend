@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from "react";
-import { Button, Card, Header, Select, Pagination, Radio } from 'semantic-ui-react'
+import { Button, Card, Header, Segment, Pagination, Dropdown } from 'semantic-ui-react'
 import JobPostingService from "../services/jobPostingService"
 import { Popup } from 'semantic-ui-react'
 import { useDispatch } from 'react-redux';
@@ -13,37 +13,43 @@ export default function JobPostingList() {
     const dispatch = useDispatch()
 
     const [jobPostings, setJobPostings] = useState([])
-    const [pageNo, setPageNo] = useState(1)
-    const [pageCount, setPageCount] = useState(1)
-    const [pageSize10, setPageSize10] = useState(10)
-    const [pageSize20, setPageSize20] = useState(20)
-    const [pageSize50, setPageSize50] = useState(50)
-    const [pageSize100, setPageSize100] = useState(100)
-
-    function totalPage() {
-        let bise = jobPostingService.getJobPosting().then(result => setPageCount(result.data.data.length))
-        console.log(bise);
-    }
-
-    function handlePageSize10() {
-        jobPostingService.getJobPostingPage(pageNo, pageSize10).then(result => setJobPostings(result.data.data))
-    }
-
-    function handlePageSize20() {
-        jobPostingService.getJobPostingPage(pageNo, pageSize20).then(result => setJobPostings(result.data.data))
-    }
-
-    function handlePageSize50() {
-        jobPostingService.getJobPostingPage(pageNo, pageSize50).then(result => setJobPostings(result.data.data))
-    }
-
-    function handlePageSize100() {
-        jobPostingService.getJobPostingPage(pageNo, pageSize100).then(result => setJobPostings(result.data.data))
-    }
+    const [currentJob, setCurrentJob] = useState({});
+    const [page, setPage] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
 
     useEffect(() => {
-        jobPostingService.getJobPostingPage(pageNo, 10).then(result => setJobPostings(result.data.data))
-    }, [])
+
+        return jobPostingService.getJobPostingPage(page, pageSize)
+            .then((result) => {
+                setJobPostings(result.data.data);
+            });
+    }, []);
+
+    const pageSizes = [
+        { key: 'pageSize10', text: '10', value: '10' },
+        { key: 'pageSize20', text: '20', value: '20' },
+        { key: 'pageSize50', text: '50', value: '50' },
+        { key: 'pageSize100', text: '100', value: '100' }
+    ];
+
+    const handleChangePageSize = (value) => {
+        setPageSize(value);
+        jobPostingService
+            .getJobPostingPage(page, value)
+            .then((result) => {
+                setJobPostings(result.data.data);
+            });
+    }
+
+    function handleChangePage(page) {
+        setPage(page);
+        jobPostingService
+            .getJobPostingPage(page, pageSize)
+            .then((results) => {
+                setJobPostings(results.data.data);
+            });
+    }
+
 
     const handleAddToFavorite = (jobPosting) => {
         dispatch(addToFavorite(jobPosting))
@@ -57,14 +63,14 @@ export default function JobPostingList() {
 
     return (
         <div>
-            <Select placeholder='' />
+            <Segment >
+                <Dropdown fluid placeholder="Per page" search selection options={pageSizes} onChange={(e, data) => {
+                    handleChangePageSize(data.value)
+                }} ></Dropdown>
+            </Segment>
             <Header as="h1">
                 <Header.Content style={{ color: "#5f86a0" }} >Job Postings</Header.Content>
             </Header>
-            <Button onClick={handlePageSize10} circular color='grey'>10</Button>
-            <Button onClick={handlePageSize20} circular color='grey'>20</Button>
-            <Button onClick={handlePageSize50} circular color='grey'>50</Button>
-            <Button onClick={handlePageSize100} circular color='grey'>100</Button>
             <Card.Group itemsPerRow={3}>
                 {
                     jobPostings.map(jobPosting => (
@@ -88,9 +94,12 @@ export default function JobPostingList() {
                         </Card>
                     ))
                 }
-                <Button onClick={totalPage}></Button>
             </Card.Group>
-            <Pagination defaultActivePage={1} activePage={pageNo} totalPages={totalPage} />
+            <Pagination style={{ marginTop: "2em" }} defaultActivePage={page}
+                onPageChange={(e, data) => {
+                    handleChangePage(data.activePage);
+                }}
+                totalPages={10} />
         </div>
     )
 }
