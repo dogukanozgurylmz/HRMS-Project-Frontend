@@ -1,12 +1,12 @@
 import { useFormik } from 'formik'
 import * as Yup from "yup";
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Form, Message, Grid, Image, Button } from "semantic-ui-react";
 import ResumeService from '../../services/resumeService';
 
 export default function NewResume() {
 
-    const [resumes, setResumes] = useState([])
+    const [resumes] = useState([])
 
     const resumeId = resumes.map(resume => resume.id)
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import AuthService from '../../services/authService'
-import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+import { Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
 import { useFormik } from "formik";
 import * as Yup from "yup";
 

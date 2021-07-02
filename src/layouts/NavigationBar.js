@@ -27,6 +27,7 @@ export default function NavigationBar() {
                     <Menu.Item as={NavLink} to="/home" >HRMS</Menu.Item>
                     <Menu.Item as={NavLink} to="/employers" >Employers</Menu.Item>
                     <Menu.Item as={NavLink} to="/jobpostings" >Job Postings</Menu.Item>
+                    <Menu.Item as={NavLink} to="/resumes" >Resumes</Menu.Item>
                     <Menu.Item position='right'>
                     {favoriteItems.length>0&&<FavoriteSummary/>}
                         {isAuthenticated?<SignIn signOut={handleSignOut} />:<SignOut signIn={handleSignIn} />}
