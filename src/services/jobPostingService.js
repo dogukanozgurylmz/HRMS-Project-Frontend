@@ -30,4 +30,8 @@ export default class JobPostingService{
         return axios.get(`http://localhost:8080/api/jobpostings/getallByPage?pageNo=${pageNo}&pageSize=${pageSize}`)
     }
 
+    getByJobPostingFilter(pageNo, pageSize, jobPostingFilter){
+        return axios.get(`http://localhost:8080/api/jobpostings/getByJobPostingFilter?pageNo=${pageNo}&pageSize=${pageSize}`,jobPostingFilter)
+    }
+
 }

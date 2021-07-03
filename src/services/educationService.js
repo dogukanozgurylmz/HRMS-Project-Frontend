@@ -10,4 +10,8 @@ export default class EducationService{
         return axios.get("http://localhost:8080/api/education/findByResumeId?id="+id)
     }
 
+    newEducation(education){
+        return axios.post("http://localhost:8080/api/education/add",education)
+    }
+
 }

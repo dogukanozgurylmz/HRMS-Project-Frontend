@@ -10,4 +10,8 @@ export default class LanguageService{
         return axios.get("http://localhost:8080/api/languages/findByResumeId?id="+id)
     }
 
+    newLanguage(language){
+        return axios.post("http://localhost:8080/api/languages/add",language)
+    }
+
 }

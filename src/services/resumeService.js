@@ -11,7 +11,7 @@ export default class ResumeService{
     }
 
     newResume(resume){
-        return axios.get("http://localhost:8080/api/resumes/add",resume)
+        return axios.post("http://localhost:8080/api/resumes/add",resume)
     }
 
     saveImage(file,resumeId){

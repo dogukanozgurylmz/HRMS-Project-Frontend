@@ -14,7 +14,6 @@ import {
   Card,
   Popup
 } from 'semantic-ui-react'
-import JobPostingList from './JobPostingList'
 import CityList from './CityList'
 import JobPostingService from '../services/jobPostingService'
 import { useDispatch } from 'react-redux'

@@ -2,12 +2,12 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import React, { useEffect, useState } from "react";
 import { Form, Message, Segment } from "semantic-ui-react";
-import JobPostingService from '../../services/jobPostingService';
-import CityService from '../../services/cityService';
-import EmployerUserService from '../../services/employerUserService';
-import JobPositionService from '../../services/jobPositionService';
-import WorkingTimeService from '../../services/workingTimeService';
-import WorkTypeService from "../../services/workTypeService";
+import JobPostingService from '../../../services/jobPostingService';
+import CityService from '../../../services/cityService';
+import EmployerUserService from '../../../services/employerUserService';
+import JobPositionService from '../../../services/jobPositionService';
+import WorkingTimeService from '../../../services/workingTimeService';
+import WorkTypeService from "../../../services/workTypeService";
 
 export default function NewJobPosting() {
 
@@ -121,7 +121,7 @@ export default function NewJobPosting() {
                         <Form.Dropdown required label="Job Positions" placeholder="Select Job" selection search value={formik.values.jobPositionId} options={jobPositionOptions} onChange={(event, data) => {
                             handleChangeSemantic("jobPositionId", data.value)
                         }} />
-                        {formik.errors.jobPositionId && formik.touched.jobTitleId ? (
+                        {formik.errors.jobPositionId && formik.touched.jobPositionId ? (
                             <Message color="red">{formik.errors.jobPositionId}</Message>
                         ) : null}
                         <Form.Dropdown required label="Cities" placeholder="Select City" selection search value={formik.values.cityId} options={citiesOptions} onChange={(event, data) => {

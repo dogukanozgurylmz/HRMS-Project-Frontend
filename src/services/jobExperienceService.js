@@ -10,4 +10,8 @@ export default class JobExperienceService{
         return axios.get("http://localhost:8080/api/jobexperiences/findByResumeId?id="+id)
     }
 
+    newJobExperience(jobExperience){
+        return axios.post("http://localhost:8080/api/jobexperiences/add",jobExperience)
+    }
+
 }

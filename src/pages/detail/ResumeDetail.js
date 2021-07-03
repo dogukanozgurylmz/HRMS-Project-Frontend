@@ -120,7 +120,6 @@ export default function ResumeDetail() {
                                             <Item >
                                                 <Item.Content >
                                                     <Item.Header >{education.schoolName}</Item.Header>
-                                                    <Divider />
                                                     <Item.Meta >{education.schoolDepartment}</Item.Meta>
                                                     <Item.Meta >{education.graduate?.description}</Item.Meta>
                                                     <Item.Description>Started Date: {education.startedDate}</Item.Description>

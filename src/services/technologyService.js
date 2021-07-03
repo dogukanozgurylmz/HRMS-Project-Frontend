@@ -10,4 +10,8 @@ export default class TechnologyService{
         return axios.get("http://localhost:8080/api/technologies/findByResumeId?id="+id)
     }
 
+    newTechnology(technology){
+        return axios.post("http://localhost:8080/api/technologies/add",technology)
+    }
+
 }

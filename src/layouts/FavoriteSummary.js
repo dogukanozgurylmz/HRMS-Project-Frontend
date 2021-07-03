@@ -19,7 +19,7 @@ export default function FavoriteSummary() {
                 <Dropdown.Menu>
                     {
                         favoriteItems.map((favoriteItem) => (
-                            <Dropdown.Item>
+                            <Dropdown.Item key={favoriteItem.id}>
                                 <Label>{favoriteItem.jobPosting.employerUser?.companyName}</Label>
                                 <Card.Meta size="tiny">{favoriteItem.jobPosting.jobPosition?.position}
                                 <Button style={{margin:"5px",padding:"5px",fontSize:"13px"}} onClick={()=>handleRemoveToFavorite(favoriteItem.jobPosting)} color="red" >Sil</Button></Card.Meta>
