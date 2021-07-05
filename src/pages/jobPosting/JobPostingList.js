@@ -14,6 +14,7 @@ export default function JobPostingList() {
     const dispatch = useDispatch()
 
     const [jobPostings, setJobPostings] = useState([])
+
     const [page, setPage] = useState(1);
     const [totalData, setTotalData] = useState([])
     const [pageSize, setPageSize] = useState(2);
@@ -22,14 +23,12 @@ export default function JobPostingList() {
 
     useEffect(() => {
         jobPostingService.getByJobPostingFilter(page, pageSize, filters)
-            .then((result) => {
-                setJobPostings(result.data.data);
-            })
-        console.log(page, pageSize, filters)
-    }, [page, pageSize, filters]);
+            .then((result) => setJobPostings(result.data.data.content))
+    }, [filters, page, pageSize]);
 
     useEffect(() => {
-        jobPostingService.getJobPosting().then(result => setTotalData(result.data.data))
+        jobPostingService.getByJobPostingFilter(page,pageSize,filters)
+            .then(result => setTotalData(result.data.data.totalElements))
     }, [])
 
     const pageSizes = [
@@ -103,7 +102,7 @@ export default function JobPostingList() {
                             onPageChange={(e, data) => {
                                 handleChangePage(data.activePage);
                             }}
-                            totalPages={Math.ceil(totalData.length / pageSize)} />
+                            totalPages={Math.ceil(totalData / pageSize)} />
                     </Grid.Column>
                 </Grid.Row>
             </Grid>
