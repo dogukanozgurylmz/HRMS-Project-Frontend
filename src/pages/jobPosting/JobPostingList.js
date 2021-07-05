@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Button, Card, Header, Segment, Pagination, Dropdown, Grid } from 'semantic-ui-react'
 import JobPostingService from "../../services/jobPostingService"
 import { Popup } from 'semantic-ui-react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addToFavorite } from "../../store/actions/favoriteActions"
 import JobPostingFilter from './JobPostingFilter';
 
@@ -16,38 +16,21 @@ export default function JobPostingList() {
     const [jobPostings, setJobPostings] = useState([])
     const [page, setPage] = useState(1);
     const [totalData, setTotalData] = useState([])
-    const [jobPostingFilter, setJobPostingFilter] = useState({});
-    const [pageSize, setPageSize] = useState(10);
+    const [pageSize, setPageSize] = useState(2);
+
+    const filters = useSelector(state => state.filter.jobPostingFilterValues)
 
     useEffect(() => {
-        jobPostingService.getByJobPostingFilter(page, pageSize, jobPostingFilter)
+        jobPostingService.getByJobPostingFilter(page, pageSize, filters)
             .then((result) => {
                 setJobPostings(result.data.data);
             })
-            console.log(page,pageSize,jobPostingFilter)
-    }, [page, pageSize, jobPostingFilter]);
+        console.log(page, pageSize, filters)
+    }, [page, pageSize, filters]);
 
     useEffect(() => {
-        jobPostingService.getJobPosting().then(result=>setTotalData(result.data.data))
+        jobPostingService.getJobPosting().then(result => setTotalData(result.data.data))
     }, [])
-
-    function handleJobPostingFilter(jobPostingFilter) {
-        if (jobPostingFilter.cityId.lenght === 0) {
-            jobPostingFilter.cityId = null
-        }
-        if (jobPostingFilter.jobPositionId.lenght === 0) {
-            jobPostingFilter.jobPositionId = null
-        }
-        if (jobPostingFilter.workTypeId.lenght === 0) {
-            jobPostingFilter.workTypeId = null
-        }
-        if (jobPostingFilter.workingTimeId.lenght === 0) {
-            jobPostingFilter.workingTimeId = null
-        }
-        setJobPostingFilter(jobPostingFilter)
-        setPage(1)
-        console.log(jobPostingFilter)
-    }
 
     const pageSizes = [
         { key: 'pageSize10', text: '10', value: '10' },
@@ -58,16 +41,11 @@ export default function JobPostingList() {
 
     const handleChangePageSize = (value) => {
         setPageSize(value);
-        jobPostingService.getJobPostingPage(page, value)
-            .then((result) => { setJobPostings(result.data.data) })
     }
 
     function handleChangePage(page) {
         setPage(page);
-        jobPostingService.getByJobPostingFilter(page, pageSize, jobPostingFilter)
-            .then((result) => { setJobPostings(result.data.data) });
     }
-
 
     const handleAddToFavorite = (jobPosting) => {
         dispatch(addToFavorite(jobPosting))
@@ -84,7 +62,7 @@ export default function JobPostingList() {
             <Grid>
                 <Grid.Row>
                     <Grid.Column width={4}>
-                        <JobPostingFilter clickEvent={handleJobPostingFilter}></JobPostingFilter>
+                        <JobPostingFilter />
                     </Grid.Column>
                     <Grid.Column width={12}>
                         <Segment >
@@ -96,16 +74,16 @@ export default function JobPostingList() {
                             <Header.Content style={{ color: "#5f86a0" }} >Job Postings</Header.Content>
                         </Header>
                         <Segment>
-                            <Card.Group itemsPerRow={3}>
+                            <Card.Group itemsPerRow={2}>
                                 {
                                     jobPostings.map(jobPosting => (
                                         <Card key={jobPosting.id}>
-                                            <Popup style={style} inverted content='Add to favorites' trigger={<Button color="blue" onClick={() => handleAddToFavorite(jobPosting)} icon='add' />} />
+                                            <Popup style={style} inverted content='Add to favorites' trigger={<Button color="blue" onClick={() => handleAddToFavorite(jobPosting)} icon='like' />} />
                                             <Card.Content>
-                                                <Card.Header>{jobPosting.employerUser.companyName}</Card.Header>
-                                                <Card.Meta>{jobPosting.employerUser.webAddress}</Card.Meta>
+                                                <Card.Header>{jobPosting.employerUser?.companyName}</Card.Header>
+                                                <Card.Meta>{jobPosting.employerUser?.webAddress}</Card.Meta>
                                             </Card.Content>
-                                            <Card.Content >{jobPosting.jobPosition.position}</Card.Content>
+                                            <Card.Content >{jobPosting.jobPosition?.position}</Card.Content>
                                             <Card.Content >Salary: {jobPosting.minSalary} - {jobPosting.maxSalary} TL</Card.Content>
                                             <Card.Content >City: {jobPosting.city.cityName}</Card.Content>
                                             <Card.Content >Application Deadline: {jobPosting.applicationDeadline}</Card.Content>

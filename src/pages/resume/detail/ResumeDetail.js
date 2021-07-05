@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Grid, Segment, Image, Header, Icon, MenuItem, Menu, Label, Rating, Divider, Item } from 'semantic-ui-react'
-import ResumeService from '../../services/resumeService'
-import TechnologyService from '../../services/technologyService'
-import LanguageService from '../../services/languageService'
-import EducationService from '../../services/educationService'
-import JobExperiencesService from '../../services/jobExperienceService'
+import ResumeService from '../../../services/resumeService'
+import TechnologyService from '../../../services/technologyService'
+import LanguageService from '../../../services/languageService'
+import EducationService from '../../../services/educationService'
+import JobExperiencesService from '../../../services/jobExperienceService'
 import { useParams } from 'react-router-dom'
 
 export default function ResumeDetail() {

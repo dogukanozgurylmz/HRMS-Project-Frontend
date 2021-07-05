@@ -77,7 +77,7 @@ export default function NewJobPosting() {
                 applicationDeadline: values.applicationDeadline,
                 minSalary: values.minSalary,
                 maxSalary: values.maxSalary,
-            };
+            }
 
             let jobPostingService = new JobPostingService();
             jobPostingService.newJobPosting(jobPostingModel).then((result) => result.data.data);

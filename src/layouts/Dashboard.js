@@ -8,8 +8,8 @@ import NewJobPosting from '../pages/jobPosting/post/NewJobPosting';
 import JobPostingApproval from '../pages/admin-operations/JobPostingApproval';
 import CandidateRegister from '../pages/register-login/CandidateRegister';
 import NewResume from '../pages/resume/post/NewResume';
-import ResumeList from '../pages/ResumeList';
-import ResumeDetail from '../pages/detail/ResumeDetail';
+import ResumeList from '../pages/resume/ResumeList';
+import ResumeDetail from '../pages/resume/detail/ResumeDetail';
 import NewLanguage from '../pages/resume/post/NewLanguage';
 
 export default function Dashboard() {

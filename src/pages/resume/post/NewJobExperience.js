@@ -84,12 +84,12 @@ export default function NewJobExperience() {
                         </Form.Group>
                         <Form.Group widths={2}>
                             <Label basic>School Name</Label>
-                            <Form.Input name="startedDate" placeholder="Started Date" value={formik.values.startedDate} onChange={formik.handleChange} />
+                            <Form.Input name="startedDate" placeholder="YYYY.AA.GG" value={formik.values.startedDate} onChange={formik.handleChange} />
                             {formik.errors.startedDate && formik.touched.startedDate ? (
                                 <Message color="red">{formik.errors.startedDate}</Message>
                             ) : null}
                             <Label basic>School Department</Label>
-                            <Form.Input name="endedDate" placeholder="Ended Date" value={formik.values.endedDate} onChange={formik.handleChange} />
+                            <Form.Input name="endedDate" placeholder="YYYY.AA.GG" value={formik.values.endedDate} onChange={formik.handleChange} />
                             {formik.errors.endedDate && formik.touched.endedDate ? (
                                 <Message color="red">{formik.errors.endedDate}</Message>
                             ) : null}

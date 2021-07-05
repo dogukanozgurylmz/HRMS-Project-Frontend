@@ -46,9 +46,9 @@ export default function JobPostingApproval() {
                     jobPostings.map(jobPosting => (
                         <Table.Body key={jobPosting.id}>
                             <Table.Row>
-                                <Table.Cell>{jobPosting.employerUser.companyName}</Table.Cell>
-                                <Table.Cell>{jobPosting.jobPosition.position}</Table.Cell>
-                                <Table.Cell>{jobPosting.city.cityName}</Table.Cell>
+                                <Table.Cell>{jobPosting.employerUser?.companyName}</Table.Cell>
+                                <Table.Cell>{jobPosting.jobPosition?.position}</Table.Cell>
+                                <Table.Cell>{jobPosting.city?.cityName}</Table.Cell>
                                 <Table.Cell>{jobPosting.minSalary}</Table.Cell>
                                 <Table.Cell>{jobPosting.maxSalary}</Table.Cell>
                                 <Table.Cell>{jobPosting.quota}</Table.Cell>
