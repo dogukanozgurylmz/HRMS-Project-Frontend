@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Grid, Segment, Image, Header, Icon, MenuItem, Menu, Label, Rating, Divider, Item } from 'semantic-ui-react'
+import { Grid, Segment, Image, Header, Icon, Menu, Label, Rating, Divider, Item } from 'semantic-ui-react'
 import ResumeService from '../../../services/resumeService'
 import TechnologyService from '../../../services/technologyService'
 import LanguageService from '../../../services/languageService'
@@ -20,24 +20,12 @@ export default function ResumeDetail() {
     useEffect(() => {
         let resumeService = new ResumeService()
         resumeService.getById(id).then(result => setResume(result.data.data))
-    }, [])
-
-    useEffect(() => {
         let technologyService = new TechnologyService()
         technologyService.getByResumeById(id).then(result => setTechnologies(result.data.data))
-    }, [])
-
-    useEffect(() => {
         let languageService = new LanguageService()
         languageService.getByResumeById(id).then(result => setLanguages(result.data.data))
-    }, [])
-
-    useEffect(() => {
         let jobExperienceService = new JobExperiencesService()
         jobExperienceService.getByResumeById(id).then(result => setJobExperiences(result.data.data))
-    }, [])
-
-    useEffect(() => {
         let educationService = new EducationService()
         educationService.getByResumeById(id).then(result => setEducations(result.data.data))
     }, [])
@@ -60,8 +48,8 @@ export default function ResumeDetail() {
                                 <Header size="small">Description:</Header>
                                 <Header.Content>{resume.description}</Header.Content>
                                 <Menu widths="2">
-                                    <MenuItem href={resume.githubLink}><Icon size="large" name="github" /></MenuItem>
-                                    <MenuItem href={resume.linkedLink}><Icon size="large" name="linkedin" /></MenuItem>
+                                    <Menu.Item href={resume.githubLink}><Icon size="large" name="github" /></Menu.Item>
+                                    <Menu.Item href={resume.linkedLink}><Icon size="large" name="linkedin" /></Menu.Item>
                                 </Menu>
                             </Segment>
                         </Grid.Column>

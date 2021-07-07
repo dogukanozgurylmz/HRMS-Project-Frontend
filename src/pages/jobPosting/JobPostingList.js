@@ -6,6 +6,7 @@ import { Popup } from 'semantic-ui-react'
 import { useDispatch, useSelector } from 'react-redux';
 import { addToFavorite } from "../../store/actions/favoriteActions"
 import JobPostingFilter from './JobPostingFilter';
+import { Link } from 'react-router-dom';
 
 export default function JobPostingList() {
 
@@ -16,20 +17,17 @@ export default function JobPostingList() {
     const [jobPostings, setJobPostings] = useState([])
 
     const [page, setPage] = useState(1);
-    const [totalData, setTotalData] = useState([])
+    const [totalData, setTotalData] = useState(1)
     const [pageSize, setPageSize] = useState(2);
 
     const filters = useSelector(state => state.filter.jobPostingFilterValues)
 
     useEffect(() => {
         jobPostingService.getByJobPostingFilter(page, pageSize, filters)
-            .then((result) => setJobPostings(result.data.data.content))
-    }, [filters, page, pageSize]);
+            .then((result) => { setJobPostings(result.data.data.content) 
+                setTotalData(result.data.data.totalElements) })
 
-    useEffect(() => {
-        jobPostingService.getByJobPostingFilter(page,pageSize,filters)
-            .then(result => setTotalData(result.data.data.totalElements))
-    }, [])
+    }, [page, pageSize, filters]);
 
     const pageSizes = [
         { key: 'pageSize10', text: '10', value: '10' },
@@ -56,6 +54,8 @@ export default function JobPostingList() {
         padding: '1em',
     }
 
+    const totalPages=totalData / pageSize
+
     return (
         <div>
             <Grid>
@@ -73,10 +73,10 @@ export default function JobPostingList() {
                             <Header.Content style={{ color: "#5f86a0" }} >Job Postings</Header.Content>
                         </Header>
                         <Segment>
-                            <Card.Group itemsPerRow={2}>
+                            <Card.Group centered itemsPerRow={3}>
                                 {
                                     jobPostings.map(jobPosting => (
-                                        <Card key={jobPosting.id}>
+                                        <Card key={jobPosting.id} >
                                             <Popup style={style} inverted content='Add to favorites' trigger={<Button color="blue" onClick={() => handleAddToFavorite(jobPosting)} icon='like' />} />
                                             <Card.Content>
                                                 <Card.Header>{jobPosting.employerUser?.companyName}</Card.Header>
@@ -88,7 +88,7 @@ export default function JobPostingList() {
                                             <Card.Content >Application Deadline: {jobPosting.applicationDeadline}</Card.Content>
                                             <Card.Content extra>
                                                 <div className='ui one buttons'>
-                                                    <Button basic color='green'>
+                                                    <Button basic color='green' as={Link} to={`/jobPosting/${jobPosting.id}`}>
                                                         Apply for a job
                                                     </Button>
                                                 </div>
@@ -98,11 +98,11 @@ export default function JobPostingList() {
                                 }
                             </Card.Group>
                         </Segment>
-                        <Pagination style={{ marginTop: "2em" }} defaultActivePage={page}
+                        {totalPages>0&&<Pagination style={{ marginTop: "2em" }} defaultActivePage={page}
                             onPageChange={(e, data) => {
                                 handleChangePage(data.activePage);
                             }}
-                            totalPages={Math.ceil(totalData / pageSize)} />
+                            totalPages={Math.ceil(totalPages)} />}
                     </Grid.Column>
                 </Grid.Row>
             </Grid>

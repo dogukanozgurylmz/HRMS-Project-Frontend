@@ -10,6 +10,10 @@ export default class JobPostingService{
         return axios.post("http://localhost:8080/api/jobpostings/add",jobPosting)
     }
 
+    getById(id){
+        return axios.get("http://localhost:8080/api/jobpostings/findbyid?id="+id)
+    }
+
     getChangeStatus(id){
         return axios.get("http://localhost:8080/api/jobpostings/changeStatus?id="+id)
     }
@@ -30,8 +34,8 @@ export default class JobPostingService{
         return axios.get(`http://localhost:8080/api/jobpostings/getallByPage?pageNo=${pageNo}&pageSize=${pageSize}`)
     }
 
-    getByJobPostingFilter(pageNo, pageSize, jobPostingFilter){
-        return axios.get(`http://localhost:8080/api/jobpostings/getByJobPostingFilter?pageNo=${pageNo}&pageSize=${pageSize}`,jobPostingFilter)
+    getByJobPostingFilter(pageNo, pageSize, filter){
+        return axios.post(`http://localhost:8080/api/jobpostings/getByJobPostingFilter?pageNo=${pageNo}&pageSize=${pageSize}`,filter)
     }
 
 }

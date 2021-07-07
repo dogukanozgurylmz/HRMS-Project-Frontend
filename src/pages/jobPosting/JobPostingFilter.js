@@ -3,7 +3,7 @@ import CityService from "../../services/cityService"
 import JobPositionService from "../../services/jobPositionService"
 import WorkingTime from "../../services/workingTimeService"
 import WorkTypeService from "../../services/workTypeService"
-import { Divider, Button, Form } from 'semantic-ui-react'
+import { Divider, Button, Form, Segment } from 'semantic-ui-react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useFormik } from 'formik'
 import { addNewFilter, clearFilter } from "../../store/actions/filterActions"
@@ -79,7 +79,7 @@ export default function JobPostingFilter() {
         },
         onSubmit: (values) => {
             dispatch(addNewFilter(values))
-        }
+        },
     })
 
     function handleClearFilters() {
@@ -88,101 +88,116 @@ export default function JobPostingFilter() {
     }
 
     return (
-        <div>
-            <Form>
-                <div
-                    style={{ overflowY: "auto", maxHeight: "200px", margin: "10px 10px" }}
-                >
-                    <Form.Field label="Work Types" />
-                    {
-                        workTypeOptions.map(workTypeOption => (
-                            <Form.Checkbox
-                                onChange={(e, { value }) => {
-                                    formik.setFieldValue(
-                                        "workTypeId",
-                                        formik.values.workTypeId.includes(value)
-                                            ? [...formik.values.workTypeId.filter((i) => i !== value)]
-                                            : [...formik.values.workTypeId, value]
-                                    );
-                                }}
-                                key={workTypeOption.key}
-                                checked={formik.values.workTypeId.includes(workTypeOption.value)}
-                                label={workTypeOption.text}
-                                value={workTypeOption.value}
-                            />
-                        ))
-                    }
-                </div>
-                <Divider />
-                <div
-                    style={{ overflowY: "auto", maxHeight: "200px", margin: "10px 10px" }}
-                >
-                    <Form.Field label="Working Times" />
-                    {
-                        workingTimeOptions.map(workingTimeOption => (
-                            <Form.Checkbox
-                                onChange={(e, { value }) => {
-                                    formik.setFieldValue(
-                                        "workingTimeId",
-                                        formik.values.workingTimeId.includes(value)
-                                            ? [...formik.values.workingTimeId.filter((i) => i !== value)]
-                                            : [...formik.values.workingTimeId, value]
-                                    )
-                                }}
-                                key={workingTimeOption.key}
-                                checked={formik.values.workingTimeId.includes(workingTimeOption.value)}
-                                label={workingTimeOption.text}
-                                value={workingTimeOption.value}
-                            />
-                        ))
-                    }
-                </div>
-                <Divider />
-                <div
-                    style={{ overflowY: "auto", maxHeight: "200px", margin: "10px 10px" }}
-                >
-                    <Form.Field label="Cities" />
-                    {cityOptions.map((cityOption) => (
-                        <Form.Checkbox
-                            onChange={(e, { value }) => {
-                                formik.setFieldValue(
-                                    "cityId",
-                                    formik.values.cityId.includes(value)
-                                        ? [...formik.values.cityId.filter((i) => i !== value)]
-                                        : [...formik.values.cityId, value]
-                                );
-                            }}
-                            key={cityOption.key}
-                            checked={formik.values.cityId.includes(cityOption.value)}
-                            label={cityOption.text}
-                            value={cityOption.value}
-                        />
-                    ))}
-                </div>
-                <Divider />
-                <div
-                    style={{ overflowY: "auto", maxHeight: "200px", margin: "10px 10px" }}
-                >
-                    <Form.Field label="Job Positions" />
-                    {jobPositionOptions.map((jobPositionOption) => (
-                        <Form.Checkbox
-                            onChange={(e, { value }) => {
-                                formik.setFieldValue(
-                                    "jobPositionId",
-                                    formik.values.jobPositionId.includes(value)
-                                        ? [...formik.values.jobPositionId.filter((i) => i !== value)]
-                                        : [...formik.values.jobPositionId, value]
-                                );
-                            }}
-                            key={jobPositionOption.key}
-                            checked={formik.values.jobPositionId.includes(jobPositionOption.value)}
-                            label={jobPositionOption.text}
-                            value={jobPositionOption.value}
-                        />
-                    ))}
-                </div>
-                <Button type="submit" fluid color="green" onClick={formik.handleSubmit} >Filter</Button>
-            </Form>
+        <div style={{ position: "sticky", top: "85px"}}>
+            <div
+                style={{ overflowY: "auto", maxHeight: "600px"}}
+            >
+                <Form>
+                    <Segment color="black">
+                        <Segment>
+                            <Form.Field label="Work Types" />
+                            <div
+                                style={{ overflowY: "auto", maxHeight: "200px", margin: "10px 10px" }}
+                            >
+                                {
+                                    workTypeOptions.map(workTypeOption => (
+                                        <Form.Checkbox
+                                            onChange={(e, { value }) => {
+                                                formik.setFieldValue(
+                                                    "workTypeId",
+                                                    formik.values.workTypeId.includes(value)
+                                                        ? [...formik.values.workTypeId.filter((i) => i !== value)]
+                                                        : [...formik.values.workTypeId, value]
+                                                );
+                                            }}
+                                            key={workTypeOption.key}
+                                            checked={formik.values.workTypeId.includes(workTypeOption.value)}
+                                            label={workTypeOption.text}
+                                            value={workTypeOption.value}
+                                        />
+                                    ))
+                                }
+                            </div>
+                        </Segment>
+                        <Divider />
+                        <Segment>
+                            <Form.Field label="Working Times" />
+                            <div
+                                style={{ overflowY: "auto", maxHeight: "200px", margin: "10px 10px" }}
+                            >
+                                {
+                                    workingTimeOptions.map(workingTimeOption => (
+                                        <Form.Checkbox
+                                            onChange={(e, { value }) => {
+                                                formik.setFieldValue(
+                                                    "workingTimeId",
+                                                    formik.values.workingTimeId.includes(value)
+                                                        ? [...formik.values.workingTimeId.filter((i) => i !== value)]
+                                                        : [...formik.values.workingTimeId, value]
+                                                )
+                                            }}
+                                            key={workingTimeOption.key}
+                                            checked={formik.values.workingTimeId.includes(workingTimeOption.value)}
+                                            label={workingTimeOption.text}
+                                            value={workingTimeOption.value}
+                                        />
+                                    ))
+                                }
+                            </div>
+                        </Segment>
+                        <Divider />
+                        <Segment>
+                            <Form.Field label="Cities" />
+                            <div
+                                style={{ overflowY: "auto", maxHeight: "200px", margin: "10px 10px" }}
+                            >
+                                {cityOptions.map((cityOption) => (
+                                    <Form.Checkbox
+                                        onChange={(e, { value }) => {
+                                            formik.setFieldValue(
+                                                "cityId",
+                                                formik.values.cityId.includes(value)
+                                                    ? [...formik.values.cityId.filter((i) => i !== value)]
+                                                    : [...formik.values.cityId, value]
+                                            );
+                                        }}
+                                        key={cityOption.key}
+                                        checked={formik.values.cityId.includes(cityOption.value)}
+                                        label={cityOption.text}
+                                        value={cityOption.value}
+                                    />
+                                ))}
+                            </div>
+                        </Segment>
+                        <Divider />
+                        <Segment>
+                            <Form.Field label="Job Positions" />
+                            <div
+                                style={{ overflowY: "auto", maxHeight: "200px", margin: "10px 10px" }}
+                            >
+                                {jobPositionOptions.map((jobPositionOption) => (
+                                    <Form.Checkbox
+                                        onChange={(e, { value }) => {
+                                            formik.setFieldValue(
+                                                "jobPositionId",
+                                                formik.values.jobPositionId.includes(value)
+                                                    ? [...formik.values.jobPositionId.filter((i) => i !== value)]
+                                                    : [...formik.values.jobPositionId, value]
+                                            );
+                                        }}
+                                        key={jobPositionOption.key}
+                                        checked={formik.values.jobPositionId.includes(jobPositionOption.value)}
+                                        label={jobPositionOption.text}
+                                        value={jobPositionOption.value}
+                                    />
+                                ))}
+                            </div>
+                        </Segment>
+                    </Segment>
+                </Form>
+            </div>
+            <Button style={{ marginTop: "10px" }} type="submit" color="red" onClick={handleClearFilters} >Reset</Button>
+            <Button type="submit" color="green" onClick={formik.handleSubmit}>Filter</Button>
         </div>
     )
 }

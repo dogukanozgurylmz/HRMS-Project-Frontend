@@ -5,6 +5,7 @@ import NavigationBar from './layouts/NavigationBar';
 import { Container } from 'semantic-ui-react';
 import { Route } from 'react-router'
 import HomePage from './pages/HomePage'
+import Footer from './layouts/Footer';
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
       <Container className='main'>
         <Dashboard />
       </Container>
+      <Footer/>
     </div>
   );
 }

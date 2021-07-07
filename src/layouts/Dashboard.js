@@ -11,6 +11,7 @@ import NewResume from '../pages/resume/post/NewResume';
 import ResumeList from '../pages/resume/ResumeList';
 import ResumeDetail from '../pages/resume/detail/ResumeDetail';
 import NewLanguage from '../pages/resume/post/NewLanguage';
+import JobPostingDetail from '../pages/jobPosting/detail/JobPostingDetail';
 
 export default function Dashboard() {
     return (
@@ -25,10 +26,10 @@ export default function Dashboard() {
                         <Route exact path='/jobpostings' component={JobPostingList} />
                         <Route exact path='/resumes' component={ResumeList} />
                         <Route exact path='/resume/:id' component={ResumeDetail} />
-                        <Route exact path='/jobposting/add' component={NewJobPosting} />
+                        <Route exact path='/employer/jobposting/add' component={NewJobPosting} />
                         <Route exact path='/jobPosting/approval' component={JobPostingApproval} />
                         <Route exact path='/candidate/resume/add' component={NewResume} />
-                        <Route exact path='/candidate/language' component={NewLanguage} />
+                        <Route exact path='/jobPosting/:id' component={JobPostingDetail} />
                     </Grid.Column>
                 </Grid.Row>
             </Grid>

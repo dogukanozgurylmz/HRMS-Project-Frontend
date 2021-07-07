@@ -47,7 +47,7 @@ export default function HomePage() {
           inverted
           secondary
           textAlign='center'
-          style={{ minHeight: 500, background: "#5f86a0" }}
+          style={{ minHeight: 500, background: "#22a2dd" }}
           vertical
         >
           <Container>
@@ -55,7 +55,7 @@ export default function HomePage() {
               <Form.Group widths='equal'>
                 <Form.Input width={10} placeholder='Search job...' />
                 <CityList></CityList>
-                <Form.Button style={{ width: "5em" }} width={1} color="black" icon="search"></Form.Button>
+                <Form.Button style={{ width: "5em" }} width={1} icon="search"></Form.Button>
               </Form.Group>
             </Form>
             <Image style={{ width: "40em", margin: " 4em auto" }} src='https://res.cloudinary.com/dogukanozgurylmz/image/upload/v1623356932/hrmslogo.fw_q77xao.png' size='large' rounded />
@@ -68,13 +68,13 @@ export default function HomePage() {
           <Grid.Row>
             <Grid.Column>
               <Header as="h1">
-                <Header.Content style={{ color: "#5f86a0" }} >Job Postings</Header.Content>
+                <Header.Content style={{ color: "#22a2dd" }} >Job Postings</Header.Content>
               </Header>
               <Card.Group itemsPerRow={3}>
                 {
                   jobPostings.slice(0, 3).map(jobPosting => (
                     <Card key={jobPosting.id}>
-                      <Popup style={style} inverted content='Add to favorites' trigger={<Button color="blue" onClick={() => handleAddToFavorite(jobPosting)} icon='add' />} />
+                      <Popup style={style} inverted content='Add to favorites' trigger={<Button color="black" style={{background:"#22a2dd"}} onClick={() => handleAddToFavorite(jobPosting)} icon='like' />} />
                       <Card.Content>
                         <Card.Header>{jobPosting.employerUser.companyName}</Card.Header>
                         <Card.Meta>{jobPosting.employerUser.webAddress}</Card.Meta>
@@ -160,41 +160,6 @@ export default function HomePage() {
           <Button as='a' size='large'>
             I'm Still Quite Interested
           </Button>
-        </Container>
-      </Segment>
-
-      <Segment inverted vertical style={{ padding: '5em 0em' }}>
-        <Container>
-          <Grid divided inverted stackable>
-            <Grid.Row>
-              <Grid.Column width={3}>
-                <Header inverted as='h4' content='About' />
-                <List link inverted>
-                  <List.Item as='a'>Sitemap</List.Item>
-                  <List.Item as='a'>Contact Us</List.Item>
-                  <List.Item as='a'>Religious Ceremonies</List.Item>
-                  <List.Item as='a'>Gazebo Plans</List.Item>
-                </List>
-              </Grid.Column>
-              <Grid.Column width={3}>
-                <Header inverted as='h4' content='Services' />
-                <List link inverted>
-                  <List.Item as='a'>Banana Pre-Order</List.Item>
-                  <List.Item as='a'>DNA FAQ</List.Item>
-                  <List.Item as='a'>How To Access</List.Item>
-                  <List.Item as='a'>Favorite X-Men</List.Item>
-                </List>
-              </Grid.Column>
-              <Grid.Column width={7}>
-                <Header as='h4' inverted>
-                  Footer Header
-                </Header>
-                <p>
-                  Extra space for a call to action inside the footer that could help re-engage users.
-                </p>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
         </Container>
       </Segment>
     </div>

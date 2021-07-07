@@ -1,7 +1,7 @@
 import { useFormik } from 'formik'
 import * as Yup from "yup";
-import React, { useEffect, useState } from 'react'
-import { Message, Grid, Image, Segment, Menu, Icon, Divider, Button } from "semantic-ui-react";
+import React, { useState } from 'react'
+import { Message, Grid, Image, Segment, Menu, Icon, Button } from "semantic-ui-react";
 import ResumeService from '../../../services/resumeService';
 import { Form } from 'formik-semantic-ui';
 import NewLanguage from './NewLanguage';
