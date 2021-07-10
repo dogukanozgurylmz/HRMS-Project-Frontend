@@ -14,4 +14,8 @@ export default class JobExperienceService{
         return axios.post("http://localhost:8080/api/jobexperiences/add",jobExperience)
     }
 
+    update(jobExperience){
+        return axios.post("http://localhost:8080/api/jobexperiences/update",jobExperience)
+    }
+
 }

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import ResumeService from "../../services/resumeService"
-import TechnologyService from "../../services/technologyService"
-import { Card, Segment, Image, Label } from 'semantic-ui-react'
+import { Card, Segment, Image } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
 export default function ResumeList() {

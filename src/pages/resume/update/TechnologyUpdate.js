@@ -3,26 +3,29 @@ import { useFormik } from 'formik'
 import * as Yup from "yup";
 import TechnologyService from '../../../services/technologyService';
 import { Form } from 'formik-semantic-ui';
-import { Message, Modal, Button, Label, Icon } from "semantic-ui-react";
+import { Message, Modal, Button, Label } from "semantic-ui-react";
 
-export default function NewTechnology({resumeId}) {
+export default function TechnologyUpdate({ resumeId, technology }) {
 
     const formik = useFormik({
         initialValues: {
-            description: ""
+            description: technology.description,
+            resumeId: "",
+            technologyId: ""
         },
         validationSchema: Yup.object({
             description: Yup.string().required("Technology is not null"),
         }),
         onSubmit: (values) => {
             let technologyModel = {
+                id: technology.id,
                 resume: {
                     id: resumeId
                 },
-                description:values.description
+                description: values.description
             }
             let technologyService = new TechnologyService()
-            technologyService.newTechnology(technologyModel).then(result => result.data.data)
+            technologyService.update(technologyModel).then(result => result.data.data)
         }
     })
 
@@ -35,19 +38,19 @@ export default function NewTechnology({resumeId}) {
                 onClose={() => setOpen(false)}
                 onOpen={() => setOpen(true)}
                 open={open}
-                trigger={<Button basic color="blue" > <Icon size="large" name="th" />Add to technology</Button>}
+                trigger={<Button color="orange" size="mini" icon="undo"></Button>}
             >
-                <Modal.Header>Add to technology</Modal.Header>
+                <Modal.Header>Update to technology</Modal.Header>
                 <Modal.Content>
                     <Form>
-                        <Form.Group >
+                        <Form.Group widths="2">
                             <Label basic>Technology</Label>
                             <Form.Input name="description" placeholder="Technology" value={formik.values.description} onChange={formik.handleChange} />
                             {formik.errors.description && formik.touched.description ? (
                                 <Message color="red">{formik.errors.description}</Message>
                             ) : null}
                         </Form.Group>
-                        <Form.Button fluid color="green" onClick={formik.handleSubmit}>Save</Form.Button>
+                        <Form.Button fluid color="orange" onClick={formik.handleSubmit}>Update</Form.Button>
                     </Form>
                 </Modal.Content>
             </Modal>

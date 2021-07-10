@@ -22,7 +22,7 @@ export default function NavigationBar() {
 
     return (
         <div>
-            <Menu size='large' fixed="top" inverted pointing  >
+            <Menu size='large' color="blue" fixed="top" inverted pointing  >
                 <Container>
                     <Menu.Item as={NavLink} to="/home" >HRMS</Menu.Item>
                     <Menu.Item as={NavLink} to="/employers" >Employers</Menu.Item>

@@ -1,18 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from "yup";
 import EducationService from '../../../services/educationService';
 import { Form } from 'formik-semantic-ui';
-import { Message, Modal, Button, Label, Icon } from "semantic-ui-react";
+import { Message, Modal, Button, Label} from "semantic-ui-react";
 
-export default function NewEducation({resumeId}) {
+export default function EducationUpdate({ resumeId, education }) {
 
     const formik = useFormik({
         initialValues: {
-            schoolName: "",
-            schoolDepartment: "",
-            startedDate: "",
-            endedDate: ""
+            schoolName: education.schoolName,
+            schoolDepartment: education.schoolDepartment,
+            startedDate: education.startedDate,
+            endedDate: education.endedDate,
+            resumeId:"",
+            educationId:""
         },
         validationSchema: Yup.object({
             schoolName: Yup.string().required("School name is not null"),
@@ -22,30 +24,32 @@ export default function NewEducation({resumeId}) {
         }),
         onSubmit: (values) => {
             let educationModel = {
+                id:education.id,
                 resume: {
                     id: resumeId
                 },
-                schoolName:values.schoolName,
-                schoolDepartment:values.schoolDepartment,
-                startedDate:values.startedDate,
-                endedDate:values.endedDate
+                schoolName: values.schoolName,
+                schoolDepartment: values.schoolDepartment,
+                startedDate: values.startedDate,
+                endedDate: values.endedDate
             }
             let educationService = new EducationService()
             educationService.newEducation(educationModel).then(result => result.data.data)
         }
     })
 
-    const [open, setOpen] = React.useState(false)
+    const [open, setOpen] = useState(false)
 
     return (
         <div>
             <Modal
+                size="small"
                 onClose={() => setOpen(false)}
                 onOpen={() => setOpen(true)}
                 open={open}
-                trigger={<Button basic color="blue" > <Icon size="large" name="pencil" />Add to education</Button>}
+                trigger={<Button color="orange" size="mini" icon="undo"></Button>}
             >
-                <Modal.Header>Add to education</Modal.Header>
+                <Modal.Header>Update to education</Modal.Header>
                 <Modal.Content>
                     <Form>
                         <Form.Group widths={2}>
@@ -62,20 +66,21 @@ export default function NewEducation({resumeId}) {
                         </Form.Group>
                         <Form.Group widths={2}>
                             <Label basic>Started Date</Label>
-                            <Form.Input name="startedDate" placeholder="Started Date" value={formik.values.startedDate} onChange={formik.handleChange} />
+                            <Form.Input name="startedDate" placeholder="YYYY-AA-GG" value={formik.values.startedDate} onChange={formik.handleChange} />
                             {formik.errors.startedDate && formik.touched.startedDate ? (
                                 <Message color="red">{formik.errors.startedDate}</Message>
                             ) : null}
                             <Label basic>Ended Date</Label>
-                            <Form.Input name="endedDate" placeholder="Ended Date" value={formik.values.endedDate} onChange={formik.handleChange} />
+                            <Form.Input name="endedDate" placeholder="YYYY-AA-GG" value={formik.values.endedDate} onChange={formik.handleChange} />
                             {formik.errors.endedDate && formik.touched.endedDate ? (
                                 <Message color="red">{formik.errors.endedDate}</Message>
                             ) : null}
                         </Form.Group>
-                        <Form.Button fluid color="green" onClick={formik.handleSubmit}>Save</Form.Button>
+                        <Form.Button fluid color="orange" onClick={formik.handleSubmit}>Update</Form.Button>
                     </Form>
                 </Modal.Content>
             </Modal>
         </div>
     )
 }
+

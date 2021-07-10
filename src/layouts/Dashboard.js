@@ -10,7 +10,6 @@ import CandidateRegister from '../pages/register-login/CandidateRegister';
 import NewResume from '../pages/resume/post/NewResume';
 import ResumeList from '../pages/resume/ResumeList';
 import ResumeDetail from '../pages/resume/detail/ResumeDetail';
-import NewLanguage from '../pages/resume/post/NewLanguage';
 import JobPostingDetail from '../pages/jobPosting/detail/JobPostingDetail';
 
 export default function Dashboard() {

@@ -23,6 +23,7 @@ export default function JobPostingApproval() {
     const [jobPostings, setJobPostings] = useState([])
 
     useEffect(() => {
+        let jobPostingService = new JobPostingService()
         jobPostingService.getByIsActiveFalse().then(result => setJobPostings(result.data.data))
     }, [])
 

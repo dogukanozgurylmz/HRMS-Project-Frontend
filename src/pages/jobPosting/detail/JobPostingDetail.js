@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Segment, Header, Divider, Grid, Menu, Item } from 'semantic-ui-react'
+import { Segment, Header, Divider, Grid, Item } from 'semantic-ui-react'
 import JobPostingService from '../../../services/jobPostingService'
 
 export default function JobPostingDetail() {
@@ -12,7 +12,7 @@ export default function JobPostingDetail() {
     useEffect(() => {
         let jobPostingService = new JobPostingService()
         jobPostingService.getById(id).then(result => setJobPosting(result.data.data))
-    }, [])
+    }, [id])
 
     return (
         <div>

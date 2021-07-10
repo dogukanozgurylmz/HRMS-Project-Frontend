@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import {
   Button,
   Container,
@@ -8,37 +8,55 @@ import {
   Header,
   Form,
   Image,
-  List,
   Segment,
   Visibility,
   Card,
-  Popup
+  Popup,
 } from 'semantic-ui-react'
-import CityList from './CityList'
 import JobPostingService from '../services/jobPostingService'
 import { useDispatch } from 'react-redux'
 import { addToFavorite } from '../store/actions/favoriteActions'
+import CityService from "../services/cityService";
+import JobPositionService from '../services/jobPositionService'
 
 export default function HomePage() {
 
   const dispatch = useDispatch()
 
   const [jobPostings, setJobPosting] = useState([])
+  const [cities, setCities] = useState([])
+  const [jobPositions, setJobPositions] = useState([])
 
   useEffect(() => {
     let jobPostingService = new JobPostingService()
     jobPostingService.getJobPosting().then(result => setJobPosting(result.data.data))
+    let cityService = new CityService();
+    cityService.getCity().then(result => setCities(result.data.data))
+    let jobPositionService = new JobPositionService()
+    jobPositionService.getJobPosition().then(result => setJobPositions(result.data.data))
   }, [])
 
   const handleAddToFavorite = (jobPosting) => {
     dispatch(addToFavorite(jobPosting))
   }
 
+  const citiesOptions = cities.map((city, index) => ({
+    key: index,
+    text: city.cityName,
+    value: city.id
+  }))
+
+  const jobPositionOptions = jobPositions.map((jobPosition, index) => ({
+    key: index,
+    text: jobPosition.position,
+    value: jobPosition.id
+  }))
+
   const style = {
     borderRadius: 0,
     opacity: 0.7,
     padding: '1em',
-}
+  }
 
   return (
     <div>
@@ -47,18 +65,26 @@ export default function HomePage() {
           inverted
           secondary
           textAlign='center'
-          style={{ minHeight: 500, background: "#22a2dd" }}
+          style={{ minHeight: 400, background: "#22a2dd" }}
           vertical
         >
           <Container>
-            <Form style={{ marginTop: "6em" }} >
-              <Form.Group widths='equal'>
-                <Form.Input width={10} placeholder='Search job...' />
-                <CityList></CityList>
-                <Form.Button style={{ width: "5em" }} width={1} icon="search"></Form.Button>
-              </Form.Group>
-            </Form>
-            <Image style={{ width: "40em", margin: " 4em auto" }} src='https://res.cloudinary.com/dogukanozgurylmz/image/upload/v1623356932/hrmslogo.fw_q77xao.png' size='large' rounded />
+            <Grid>
+              <Grid.Row>
+                <Grid.Column width="8">
+                  <Form style={{ marginTop: "10em" }} >
+                    <Form.Group>
+                      <Form.Dropdown multiple width="8" required placeholder="Select City" selection search options={citiesOptions} />
+                      <Form.Dropdown multiple width="8" fluid required placeholder="Select Job Position" selection search options={jobPositionOptions} />
+                    </Form.Group>
+                    <Form.Button inverted color='black' size="small" fluid icon="search"></Form.Button>
+                  </Form>
+                </Grid.Column>
+                <Grid.Column width="8">
+                  <Image style={{ margin: " 0 auto", marginTop: "5em" }} circular src='https://res.cloudinary.com/dogukanozgurylmz/image/upload/v1625773040/hrms_gmmuea.jpg' size='large' rounded />
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
           </Container>
         </Segment>
       </Visibility>
@@ -70,11 +96,12 @@ export default function HomePage() {
               <Header as="h1">
                 <Header.Content style={{ color: "#22a2dd" }} >Job Postings</Header.Content>
               </Header>
-              <Card.Group itemsPerRow={3}>
+              <Card.Group itemsPerRow="4" centered>
+
                 {
                   jobPostings.slice(0, 3).map(jobPosting => (
-                    <Card key={jobPosting.id}>
-                      <Popup style={style} inverted content='Add to favorites' trigger={<Button color="black" style={{background:"#22a2dd"}} onClick={() => handleAddToFavorite(jobPosting)} icon='like' />} />
+                    <Card centered key={jobPosting.id}>
+                      <Popup style={style} inverted content='Add to favorites' trigger={<Button color="black" style={{ background: "#22a2dd" }} onClick={() => handleAddToFavorite(jobPosting)} icon='like' />} />
                       <Card.Content>
                         <Card.Header>{jobPosting.employerUser.companyName}</Card.Header>
                         <Card.Meta>{jobPosting.employerUser.webAddress}</Card.Meta>
@@ -85,9 +112,9 @@ export default function HomePage() {
                       <Card.Content >Application Deadline: {jobPosting.applicationDeadline}</Card.Content>
                       <Card.Content extra>
                         <div className='ui one buttons'>
-                          <Button basic color='green'>
-                            Apply for a job
-                          </Button>
+                          <Card.Content extra>
+                            <Button fluid><Link to={`/jobPosting/${jobPosting.id}`}>Apply for a job</Link></Button>
+                          </Card.Content>
                         </div>
                       </Card.Content>
                     </Card>
@@ -146,7 +173,6 @@ export default function HomePage() {
             horizontal
             style={{ margin: '3em 0em', textTransform: 'uppercase' }}
           >
-            <a href='#'>Case Studies</a>
           </Divider>
 
           <Header as='h3' style={{ fontSize: '2em' }}>
@@ -162,6 +188,6 @@ export default function HomePage() {
           </Button>
         </Container>
       </Segment>
-    </div>
+    </div >
   )
 }

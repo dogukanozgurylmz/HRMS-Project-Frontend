@@ -4,14 +4,12 @@ import React, { useEffect, useState } from "react";
 import { Form, Message, Segment } from "semantic-ui-react";
 import JobPostingService from '../../../services/jobPostingService';
 import CityService from '../../../services/cityService';
-import EmployerUserService from '../../../services/employerUserService';
 import JobPositionService from '../../../services/jobPositionService';
 import WorkingTimeService from '../../../services/workingTimeService';
 import WorkTypeService from "../../../services/workTypeService";
 
 export default function NewJobPosting() {
 
-    const [employerUsers, setEmployerUsers] = useState([])
     const [cities, setCities] = useState([])
     const [jobPositions, setJobPositions] = useState([])
     const [workingTimes, setWorkingTimes] = useState([])
@@ -20,8 +18,6 @@ export default function NewJobPosting() {
     useEffect(() => {
         let cityService = new CityService()
         cityService.getCity().then(result => setCities(result.data.data))
-        let employerUserService = new EmployerUserService()
-        employerUserService.getEmployerUser().then(result => setEmployerUsers(result.data.data))
         let jobPositionService = new JobPositionService()
         jobPositionService.getJobPosition().then(result => setJobPositions(result.data.data))
         let workingTimeService = new WorkingTimeService()

@@ -10,8 +10,6 @@ import { Link } from 'react-router-dom';
 
 export default function JobPostingList() {
 
-    let jobPostingService = new JobPostingService()
-
     const dispatch = useDispatch()
 
     const [jobPostings, setJobPostings] = useState([])
@@ -23,9 +21,12 @@ export default function JobPostingList() {
     const filters = useSelector(state => state.filter.jobPostingFilterValues)
 
     useEffect(() => {
+        let jobPostingService = new JobPostingService()
         jobPostingService.getByJobPostingFilter(page, pageSize, filters)
-            .then((result) => { setJobPostings(result.data.data.content) 
-                setTotalData(result.data.data.totalElements) })
+            .then((result) => {
+                setJobPostings(result.data.data.content)
+                setTotalData(result.data.data.totalElements)
+            })
 
     }, [page, pageSize, filters]);
 
@@ -54,7 +55,7 @@ export default function JobPostingList() {
         padding: '1em',
     }
 
-    const totalPages=totalData / pageSize
+    const totalPages = totalData / pageSize
 
     return (
         <div>
@@ -77,7 +78,11 @@ export default function JobPostingList() {
                                 {
                                     jobPostings.map(jobPosting => (
                                         <Card key={jobPosting.id} >
-                                            <Popup style={style} inverted content='Add to favorites' trigger={<Button color="blue" onClick={() => handleAddToFavorite(jobPosting)} icon='like' />} />
+                                            <Popup style={style}
+                                                inverted content='Add to favorites'
+                                                trigger={<Button color="blue"
+                                                    onClick={() => handleAddToFavorite(jobPosting)}
+                                                    icon='like' />} />
                                             <Card.Content>
                                                 <Card.Header>{jobPosting.employerUser?.companyName}</Card.Header>
                                                 <Card.Meta>{jobPosting.employerUser?.webAddress}</Card.Meta>
@@ -87,18 +92,15 @@ export default function JobPostingList() {
                                             <Card.Content >City: {jobPosting.city.cityName}</Card.Content>
                                             <Card.Content >Application Deadline: {jobPosting.applicationDeadline}</Card.Content>
                                             <Card.Content extra>
-                                                <div className='ui one buttons'>
-                                                    <Button basic color='green' as={Link} to={`/jobPosting/${jobPosting.id}`}>
-                                                        Apply for a job
-                                                    </Button>
-                                                </div>
+                                                <Button fluid><Link to={`/jobPosting/${jobPosting.id}`}>Apply for a job</Link></Button>
                                             </Card.Content>
                                         </Card>
+
                                     ))
                                 }
                             </Card.Group>
                         </Segment>
-                        {totalPages>0&&<Pagination style={{ marginTop: "2em" }} defaultActivePage={page}
+                        {totalPages > 0 && <Pagination style={{ marginTop: "2em" }} defaultActivePage={page}
                             onPageChange={(e, data) => {
                                 handleChangePage(data.activePage);
                             }}

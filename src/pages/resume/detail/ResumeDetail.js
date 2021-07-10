@@ -6,6 +6,7 @@ import LanguageService from '../../../services/languageService'
 import EducationService from '../../../services/educationService'
 import JobExperiencesService from '../../../services/jobExperienceService'
 import { useParams } from 'react-router-dom'
+import ResumeUpdate from '../update/ResumeUpdate'
 
 export default function ResumeDetail() {
 
@@ -28,12 +29,12 @@ export default function ResumeDetail() {
         jobExperienceService.getByResumeById(id).then(result => setJobExperiences(result.data.data))
         let educationService = new EducationService()
         educationService.getByResumeById(id).then(result => setEducations(result.data.data))
-    }, [])
+    }, [id])
 
     return (
         <div>
             <Segment color="blue">
-                <Grid>
+                <Grid textAlign="left">
                     <Grid.Row>
                         <Grid.Column width={6}>
                             <Segment>
@@ -59,7 +60,7 @@ export default function ResumeDetail() {
                             <Header textAlign="left">Technologies</Header>
                             <Segment>
                                 {technologies.map(technology => (
-                                    <Label size="large" > {technology.description}</Label>
+                                    <Label key={technology.id} size="large" > {technology.description}</Label>
                                 ))}
                             </Segment>
                         </Grid.Column>
@@ -67,7 +68,7 @@ export default function ResumeDetail() {
                             <Header textAlign="left">Languages</Header>
                             <Segment>
                                 {languages.map(language => (
-                                    <Label size="large" >
+                                    <Label key={language.id} size="large" >
                                         {language.language}<br />
                                         <Rating disabled defaultRating={language.langLevel} maxRating={3} />
                                     </Label>
@@ -77,11 +78,11 @@ export default function ResumeDetail() {
                         </Grid.Column>
                     </Grid.Row>
                     <Grid.Row>
-                        <Grid.Column>
+                        <Grid.Column width={8}>
                             <Header textAlign="left">Job Experiences</Header>
                             <Segment>
                                 {jobExperiences.map(jobExperience => (
-                                    <Segment>
+                                    <Segment key={jobExperience.id}>
                                         <Item.Group>
                                             <Item >
                                                 <Item.Content >
@@ -97,19 +98,18 @@ export default function ResumeDetail() {
                                 ))}
                             </Segment>
                         </Grid.Column>
-                    </Grid.Row>
-                    <Grid.Row>
-                    <Grid.Column>
+                        <Grid.Column width={8}> 
                             <Header textAlign="left">Educations</Header>
                             <Segment>
                                 {educations.map(education => (
-                                    <Segment>
+                                    <Segment key={education.id}>
                                         <Item.Group>
                                             <Item >
-                                                <Item.Content >
+                                                <Item.Content>
                                                     <Item.Header >{education.schoolName}</Item.Header>
-                                                    <Item.Meta >{education.schoolDepartment}</Item.Meta>
-                                                    <Item.Meta >{education.graduate?.description}</Item.Meta>
+                                                    <Divider />
+                                                    <Item.Description >{education.schoolDepartment}</Item.Description>
+                                                    <Item.Description >{education.graduate?.description}</Item.Description>
                                                     <Item.Description>Started Date: {education.startedDate}</Item.Description>
                                                     {education.endedDate == null ? <Item.Description>Devam ediyor</Item.Description> : <Item.Description>Job departure date: {education.endedDate}</Item.Description>}
                                                 </Item.Content>
@@ -120,12 +120,9 @@ export default function ResumeDetail() {
                             </Segment>
                         </Grid.Column>
                     </Grid.Row>
-                    <Grid.Row>
-                        <Grid.Column>
-                        </Grid.Column>
-                    </Grid.Row>
                 </Grid>
             </Segment>
+            <ResumeUpdate educations={educations} jobExperiences={jobExperiences} languages={languages} resume={resume} technologies={technologies} />
         </div >
     )
 }

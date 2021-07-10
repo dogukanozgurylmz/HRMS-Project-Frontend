@@ -3,14 +3,16 @@ import { useFormik } from 'formik'
 import * as Yup from "yup";
 import LanguageService from '../../../services/languageService';
 import { Form } from 'formik-semantic-ui';
-import { Message, Modal, Button, Label, Icon } from "semantic-ui-react";
+import { Message, Modal, Button, Label } from "semantic-ui-react";
 
-export default function NewLanguage({ resumeId }) {
+export default function LanguageUpdate({ resumeId, language }) {
 
     const formik = useFormik({
         initialValues: {
-            language: "",
-            langLevel: ""
+            language: language.language,
+            langLevel: language.langLevel,
+            resumeId: "",
+            languageId: ""
         },
         validationSchema: Yup.object({
             language: Yup.string().required("Language is not null"),
@@ -18,14 +20,15 @@ export default function NewLanguage({ resumeId }) {
         }),
         onSubmit: (values) => {
             let languageModel = {
-                resume:{
-                    id:resumeId
+                id: language.id,
+                resume: {
+                    id: resumeId
                 },
                 language: values.language,
                 langLevel: values.langLevel
             }
             let languageService = new LanguageService()
-            languageService.newLanguage(languageModel).then(result => result.data.data)
+            languageService.update(languageModel).then(result => result.data.data)
         }
     })
 
@@ -34,13 +37,12 @@ export default function NewLanguage({ resumeId }) {
     return (
         <div>
             <Modal
-                size="small"
                 onClose={() => setOpen(false)}
                 onOpen={() => setOpen(true)}
                 open={open}
-                trigger={<Button basic color="blue" > <Icon size="large" name="language" />Add to language</Button>}
+                trigger={<Button color="orange" size="mini" icon="undo"></Button>}
             >
-                <Modal.Header>Add to language</Modal.Header>
+                <Modal.Header>Update to language</Modal.Header>
                 <Modal.Content>
                     <Form>
                         <Form.Group widths={2}>
@@ -55,7 +57,7 @@ export default function NewLanguage({ resumeId }) {
                                 <Message color="red">{formik.errors.langLevel}</Message>
                             ) : null}
                         </Form.Group>
-                        <Form.Button fluid color="green" onClick={formik.handleSubmit}>Save</Form.Button>
+                        <Form.Button fluid color="orange" onClick={formik.handleSubmit}>Update</Form.Button>
                     </Form>
                 </Modal.Content>
             </Modal>

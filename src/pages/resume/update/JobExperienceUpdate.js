@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from "yup";
 import { Form } from 'formik-semantic-ui';
-import { Message, Modal, Button, Label, Icon } from "semantic-ui-react";
+import { Message, Modal, Button, Label } from "semantic-ui-react";
 import JobPositionService from '../../../services/jobPositionService';
 import JobExperienceService from "../../../services/jobExperienceService"
 
-export default function NewJobExperience({resumeId}) {
+export default function JobExperienceUpdate({resumeId,jobExperience}) {
 
     const [jobPositions, setJobPositions] = useState([])
     const [open, setOpen] = useState(false)
@@ -18,19 +18,21 @@ export default function NewJobExperience({resumeId}) {
 
     const formik = useFormik({
         initialValues: {
-            companyName: "",
-            jobPositionId: "",
-            startedDate: "",
-            endedDate: ""
+            companyName: jobExperience.companyName,
+            jobPositionId: jobExperience.jobPosition?.id,
+            startedDate: jobExperience.startedDate,
+            endedDate: jobExperience.endedDate,
+            resumeId:"",
+            jobExperience:""
         },
         validationSchema: Yup.object({
             companyName: Yup.string().required("Company name is not null"),
             jobPositionId: Yup.string().required("Job Position is not null"),
             startedDate: Yup.date().required("Started date is not null"),
-            endedDate: Yup.date()
         }),
         onSubmit: (values) => {
             let jobExperienceModal = {
+                id:jobExperience.id,
                 jobPosition: {
                     id: values.jobPositionId
                 },
@@ -42,7 +44,7 @@ export default function NewJobExperience({resumeId}) {
                 endedDate: values.endedDate
             }
             let jobExperienceService = new JobExperienceService()
-            jobExperienceService.newJobExperience(jobExperienceModal).then(result => result.data.data)
+            jobExperienceService.update(jobExperienceModal).then(result => result.data.data)
         }
     })
 
@@ -62,9 +64,9 @@ export default function NewJobExperience({resumeId}) {
                 onClose={() => setOpen(false)}
                 onOpen={() => setOpen(true)}
                 open={open}
-                trigger={<Button basic color="blue" > <Icon size="large" name="pencil" />Add to job experience</Button>}
+                trigger={<Button color="orange" size="mini" icon="undo"></Button>}
             >
-                <Modal.Header>Add to job experience</Modal.Header>
+                <Modal.Header>Update to job experience</Modal.Header>
                 <Modal.Content>
                     <Form>
                         <Form.Group widths={2}>
@@ -93,7 +95,7 @@ export default function NewJobExperience({resumeId}) {
                                 <Message color="red">{formik.errors.endedDate}</Message>
                             ) : null}
                         </Form.Group>
-                        <Form.Button fluid color="green" onClick={formik.handleSubmit}>Save</Form.Button>
+                        <Form.Button fluid color="orange" onClick={formik.handleSubmit}>Update</Form.Button>
                     </Form>
                 </Modal.Content>
             </Modal>
