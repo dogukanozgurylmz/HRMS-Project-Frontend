@@ -25,7 +25,7 @@ export default function JobPostingList() {
         jobPostingService.getByJobPostingFilter(page, pageSize, filters)
             .then((result) => {
                 setJobPostings(result.data.data.content)
-                setTotalData(result.data.data.totalElements)
+                setTotalData(result.data.data.totalPages)
             })
 
     }, [page, pageSize, filters]);
@@ -54,8 +54,6 @@ export default function JobPostingList() {
         opacity: 0.7,
         padding: '1em',
     }
-
-    const totalPages = totalData / pageSize
 
     return (
         <div>
@@ -100,11 +98,11 @@ export default function JobPostingList() {
                                 }
                             </Card.Group>
                         </Segment>
-                        {totalPages > 0 && <Pagination style={{ marginTop: "2em" }} defaultActivePage={page}
+                        {<Pagination style={{ marginTop: "2em" }} defaultActivePage={page}
                             onPageChange={(e, data) => {
                                 handleChangePage(data.activePage);
                             }}
-                            totalPages={Math.ceil(totalPages)} />}
+                            totalPages={totalData} />}
                     </Grid.Column>
                 </Grid.Row>
             </Grid>

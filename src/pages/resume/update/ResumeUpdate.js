@@ -8,10 +8,24 @@ import EducationUpdate from './EducationUpdate'
 import NewEducation from "../post/NewEducation"
 import JobExperienceUpdate from "./JobExperienceUpdate"
 import NewJobExperience from "../post/NewJobExperience"
+import ResumeInfosUpdate from './ResumeInfosUpdate'
+import ResumeService from '../../../services/resumeService'
 
 export default function ResumeUpdate({ resume, technologies, educations, languages, jobExperiences }) {
 
     const [open, setOpen] = useState(false)
+
+    const [selectedFile,setSelectedFile] = useState()
+
+    const handleSelectedFile = e => {
+        setSelectedFile(e.target.files[0])
+        console.log(e.target.files[0])
+    }
+    
+    const fileUploadHandler = () =>{
+        let resumeService = new ResumeService()
+        resumeService.saveImage(selectedFile,resume.id).then(result=>result.data.data)
+    }
 
     return (
         <div>
@@ -27,8 +41,8 @@ export default function ResumeUpdate({ resume, technologies, educations, languag
                         <Grid.Row>
                             <Grid.Column>
                                 <b>Add photo</b>
-                                <Input type="file" fluid icon="save"></Input>
-
+                                <Input onChange={handleSelectedFile} type="file" icon="photo" />
+                                <Button onClick={()=>fileUploadHandler} icon="save" color="orange"></Button>
                                 <Segment textAlign="left">
                                     <Header size="small">First Name: {resume.candidateUser?.firstName}</Header>
                                     <Header size="small">Last Name: {resume.candidateUser?.lastName}</Header>
@@ -39,6 +53,7 @@ export default function ResumeUpdate({ resume, technologies, educations, languag
                                         <Menu.Item href={resume.githubLink}><Icon size="large" name="github" /></Menu.Item>
                                         <Menu.Item href={resume.linkedLink}><Icon size="large" name="linkedin" /></Menu.Item>
                                     </Menu>
+                                    <ResumeInfosUpdate resume={resume} />
                                 </Segment>
                             </Grid.Column>
                         </Grid.Row>
