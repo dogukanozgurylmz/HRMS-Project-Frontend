@@ -5,6 +5,7 @@ import { Form } from 'formik-semantic-ui';
 import { Message, Modal, Button, Label, Icon } from "semantic-ui-react";
 import JobPositionService from '../../../services/jobPositionService';
 import JobExperienceService from "../../../services/jobExperienceService"
+import { toast } from 'react-toastify';
 
 export default function NewJobExperience({resumeId}) {
 
@@ -43,6 +44,8 @@ export default function NewJobExperience({resumeId}) {
             }
             let jobExperienceService = new JobExperienceService()
             jobExperienceService.newJobExperience(jobExperienceModal).then(result => result.data.data)
+            toast.success(`Job experience added`)
+            setOpen(false)
         }
     })
 

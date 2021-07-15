@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Grid, Segment, Image, Header, Icon, Menu, Label, Rating, Divider, Item } from 'semantic-ui-react'
-import ResumeService from '../../../services/resumeService'
 import TechnologyService from '../../../services/technologyService'
 import LanguageService from '../../../services/languageService'
 import EducationService from '../../../services/educationService'
 import JobExperiencesService from '../../../services/jobExperienceService'
 import { useParams } from 'react-router-dom'
 import ResumeUpdate from '../update/ResumeUpdate'
+import { useDispatch, useSelector } from 'react-redux'
+import ResumeService from '../../../services/resumeService'
+import { getResumeById } from '../../../store/actions/resumeActions'
 
 export default function ResumeDetail() {
 
@@ -17,10 +19,13 @@ export default function ResumeDetail() {
     const [languages, setLanguages] = useState([])
     const [jobExperiences, setJobExperiences] = useState([])
     const [educations, setEducations] = useState([])
+    
+    //const resume = useSelector(state => state.resume.resume)
+    //const dispatch = useDispatch()
 
     useEffect(() => {
         let resumeService = new ResumeService()
-        resumeService.getById(id).then(result => setResume(result.data.data))
+        resumeService.getById(id).then(result=>setResume(result.data.data))
         let technologyService = new TechnologyService()
         technologyService.getByResumeById(id).then(result => setTechnologies(result.data.data))
         let languageService = new LanguageService()
@@ -29,6 +34,7 @@ export default function ResumeDetail() {
         jobExperienceService.getByResumeById(id).then(result => setJobExperiences(result.data.data))
         let educationService = new EducationService()
         educationService.getByResumeById(id).then(result => setEducations(result.data.data))
+        console.log(id)
     }, [id])
 
     return (

@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import LanguageService from '../../../services/languageService';
 import { Form } from 'formik-semantic-ui';
 import { Message, Modal, Button, Label } from "semantic-ui-react";
+import { toast } from 'react-toastify';
 
 export default function LanguageUpdate({ resumeId, language }) {
 
@@ -29,6 +30,8 @@ export default function LanguageUpdate({ resumeId, language }) {
             }
             let languageService = new LanguageService()
             languageService.update(languageModel).then(result => result.data.data)
+            toast.success("Language updated")
+            setOpen(false)
         }
     })
 

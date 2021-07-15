@@ -16,7 +16,7 @@ export default function JobPostingList() {
 
     const [page, setPage] = useState(1);
     const [totalData, setTotalData] = useState(1)
-    const [pageSize, setPageSize] = useState(2);
+    const [pageSize, setPageSize] = useState(1);
 
     const filters = useSelector(state => state.filter.jobPostingFilterValues)
 
@@ -98,7 +98,7 @@ export default function JobPostingList() {
                                 }
                             </Card.Group>
                         </Segment>
-                        {<Pagination style={{ marginTop: "2em" }} defaultActivePage={page}
+                        {jobPostings.length<=0?null:<Pagination style={{ marginTop: "2em" }} defaultActivePage={page}
                             onPageChange={(e, data) => {
                                 handleChangePage(data.activePage);
                             }}

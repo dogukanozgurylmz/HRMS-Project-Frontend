@@ -9,23 +9,12 @@ import NewEducation from "../post/NewEducation"
 import JobExperienceUpdate from "./JobExperienceUpdate"
 import NewJobExperience from "../post/NewJobExperience"
 import ResumeInfosUpdate from './ResumeInfosUpdate'
-import ResumeService from '../../../services/resumeService'
+import { useSelector } from 'react-redux'
+import EducationDelete from '../delete/EducationDelete'
 
 export default function ResumeUpdate({ resume, technologies, educations, languages, jobExperiences }) {
 
     const [open, setOpen] = useState(false)
-
-    const [selectedFile,setSelectedFile] = useState()
-
-    const handleSelectedFile = e => {
-        setSelectedFile(e.target.files[0])
-        console.log(e.target.files[0])
-    }
-    
-    const fileUploadHandler = () =>{
-        let resumeService = new ResumeService()
-        resumeService.saveImage(selectedFile,resume.id).then(result=>result.data.data)
-    }
 
     return (
         <div>
@@ -41,8 +30,6 @@ export default function ResumeUpdate({ resume, technologies, educations, languag
                         <Grid.Row>
                             <Grid.Column>
                                 <b>Add photo</b>
-                                <Input onChange={handleSelectedFile} type="file" icon="photo" />
-                                <Button onClick={()=>fileUploadHandler} icon="save" color="orange"></Button>
                                 <Segment textAlign="left">
                                     <Header size="small">First Name: {resume.candidateUser?.firstName}</Header>
                                     <Header size="small">Last Name: {resume.candidateUser?.lastName}</Header>
@@ -128,16 +115,13 @@ export default function ResumeUpdate({ resume, technologies, educations, languag
                                                         {education.endedDate == null ? <Item.Description>Devam ediyor</Item.Description> : <Item.Description>Job departure date: {education.endedDate}</Item.Description>}
                                                     </Item.Content>
                                                     <EducationUpdate resumeId={resume.id} education={education} />
+                                                    <EducationDelete education={education} />
                                                 </Item>
                                             </Item.Group>
                                         </Segment>
                                     ))}
                                     <NewEducation resumeId={resume.id} />
                                 </Segment>
-                            </Grid.Column>
-                        </Grid.Row>
-                        <Grid.Row>
-                            <Grid.Column>
                             </Grid.Column>
                         </Grid.Row>
                     </Grid>

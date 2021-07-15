@@ -8,6 +8,7 @@ import NewLanguage from './NewLanguage';
 import NewTechnology from './NewTechnology';
 import NewEducation from './NewEducation';
 import NewJobExperience from './NewJobExperience';
+import { toast } from 'react-toastify';
 
 export default function NewResume() {
 
@@ -40,6 +41,7 @@ export default function NewResume() {
             let resumeService = new ResumeService()
             resumeService.newResume(resumeModel).then(result => result.data.data)
             resumeService.saveImage(photoFile,4).then(result=>result.data.data)
+            toast.success("Resume added")
         }
     })
 

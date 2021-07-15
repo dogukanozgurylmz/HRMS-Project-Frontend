@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import EducationService from '../../../services/educationService';
 import { Form } from 'formik-semantic-ui';
 import { Message, Modal, Button, Label, Icon } from "semantic-ui-react";
+import { toast } from 'react-toastify';
 
 export default function NewEducation({resumeId}) {
 
@@ -32,6 +33,8 @@ export default function NewEducation({resumeId}) {
             }
             let educationService = new EducationService()
             educationService.newEducation(educationModel).then(result => result.data.data)
+            toast.success(`${values.schoolName} - ${values.schoolDepartment} added`)
+            setOpen(false)
         }
     })
 

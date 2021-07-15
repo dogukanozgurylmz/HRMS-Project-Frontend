@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import TechnologyService from '../../../services/technologyService';
 import { Form } from 'formik-semantic-ui';
 import { Message, Modal, Button, Label, Icon } from "semantic-ui-react";
+import { toast } from 'react-toastify';
 
 export default function NewTechnology({resumeId}) {
 
@@ -23,6 +24,8 @@ export default function NewTechnology({resumeId}) {
             }
             let technologyService = new TechnologyService()
             technologyService.newTechnology(technologyModel).then(result => result.data.data)
+            toast.success(`${values.description} added`)
+            setOpen(false)
         }
     })
 

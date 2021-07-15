@@ -2,20 +2,21 @@ import { useFormik } from 'formik'
 import * as Yup from "yup";
 import React, { useState } from 'react'
 import { Message, Grid, Modal, Segment, Icon, Button } from "semantic-ui-react";
-import ResumeService from '../../../services/resumeService';
 import { Form } from 'formik-semantic-ui';
+import ResumeService from '../../../services/resumeService';
+import { toast } from "react-toastify"
 
-export default function ResumeInfosUpdate({resume}) {
+export default function ResumeInfosUpdate({ resume }) {
 
     const [open, setOpen] = useState(false)
 
     const formik = useFormik({
         initialValues: {
-            resumeId: resume.id,
+            id: resume.id,
             githubLink: resume.githubLink,
             linkedLink: resume.linkedLink,
             description: resume.description,
-            photo:resume.photo
+            photo: resume.photo
         },
         validationSchema: Yup.object({
             githubLink: Yup.string(),
@@ -24,21 +25,21 @@ export default function ResumeInfosUpdate({resume}) {
         }),
         onSubmit: (values) => {
             let resumeModel = {
-                id:resume.id,
+                id: resume.id,
                 candidateUser: {
                     id: resume.candidateUser?.id
                 },
-                photo:resume.photo,
                 githubLink: values.githubLink,
                 linkedLink: values.linkedLink,
-                description: values.description
+                description: values.description,
+                photo: resume.photo
             }
             let resumeService = new ResumeService()
             resumeService.update(resumeModel).then(result => result.data.data)
+            toast.success(`Resume head updated`)
+            setOpen(false)
         }
     })
-
-
 
     return (
         <div>
@@ -72,7 +73,7 @@ export default function ResumeInfosUpdate({resume}) {
                                         {formik.errors.description && formik.touched.description ? (
                                             <Message color="red">{formik.errors.description}</Message>
                                         ) : null}
-                                        <Form.Button fluid color="orange" onClick={formik.handleSubmit}>Update</Form.Button>
+                                        <Form.Button type="submit" fluid color="orange" onClick={formik.handleSubmit}>Update</Form.Button>
                                     </Form>
                                 </Segment>
                             </Grid.Column>

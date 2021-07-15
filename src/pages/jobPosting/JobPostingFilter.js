@@ -93,7 +93,7 @@ export default function JobPostingFilter() {
                 style={{ overflowY: "auto", maxHeight: "600px"}}
             >
                 <Form>
-                    <Segment color="black">
+                    <Segment color="blue">
                         <Segment>
                             <Form.Field label="Work Types" />
                             <div
