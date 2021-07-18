@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from "react";
-import { Button, Card, Header, Segment, Pagination, Dropdown, Grid } from 'semantic-ui-react'
+import { Button, Card, Header, Segment, Pagination, Dropdown, Grid, Divider } from 'semantic-ui-react'
 import JobPostingService from "../../services/jobPostingService"
 import { Popup } from 'semantic-ui-react'
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,8 +15,9 @@ export default function JobPostingList() {
     const [jobPostings, setJobPostings] = useState([])
 
     const [page, setPage] = useState(1);
-    const [totalData, setTotalData] = useState(1)
-    const [pageSize, setPageSize] = useState(1);
+    const [totalPage, setTotalPage] = useState(1)
+    const [pageSize, setPageSize] = useState(1)
+    const [totalData, setTotalData] = useState()
 
     const filters = useSelector(state => state.filter.jobPostingFilterValues)
 
@@ -25,7 +26,8 @@ export default function JobPostingList() {
         jobPostingService.getByJobPostingFilter(page, pageSize, filters)
             .then((result) => {
                 setJobPostings(result.data.data.content)
-                setTotalData(result.data.data.totalPages)
+                setTotalPage(result.data.data.totalPages)
+                setTotalData(result.data.data.totalElements)
             })
 
     }, [page, pageSize, filters]);
@@ -63,6 +65,7 @@ export default function JobPostingList() {
                         <JobPostingFilter />
                     </Grid.Column>
                     <Grid.Column width={12}>
+                        <Divider horizontal>{totalData} job postings</Divider>
                         <Segment >
                             <Dropdown fluid placeholder="Per page" search selection options={pageSizes} onChange={(e, data) => {
                                 handleChangePageSize(data.value)
@@ -102,7 +105,7 @@ export default function JobPostingList() {
                             onPageChange={(e, data) => {
                                 handleChangePage(data.activePage);
                             }}
-                            totalPages={totalData} />}
+                            totalPages={totalPage} />}
                     </Grid.Column>
                 </Grid.Row>
             </Grid>

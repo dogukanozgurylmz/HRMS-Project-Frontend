@@ -1,35 +1,30 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from "yup";
-import TechnologyService from '../../../services/technologyService';
 import { Form } from 'formik-semantic-ui';
 import { Message, Modal, Button, Label, Icon } from "semantic-ui-react";
-import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { technologyAdd } from '../../../store/actions/technologyActions';
 
 export default function NewTechnology({resumeId}) {
 
+    const dispatch=useDispatch()
+
     const formik = useFormik({
         initialValues: {
+            resumeId:  resumeId,
             description: ""
         },
         validationSchema: Yup.object({
             description: Yup.string().required("Technology is not null"),
         }),
         onSubmit: (values) => {
-            let technologyModel = {
-                resume: {
-                    id: resumeId
-                },
-                description:values.description
-            }
-            let technologyService = new TechnologyService()
-            technologyService.newTechnology(technologyModel).then(result => result.data.data)
-            toast.success(`${values.description} added`)
+            dispatch(technologyAdd(values))
             setOpen(false)
         }
     })
 
-    const [open, setOpen] = React.useState(false)
+    const [open, setOpen] = useState(false)
 
     return (
         <div>

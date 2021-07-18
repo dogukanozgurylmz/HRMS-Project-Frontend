@@ -6,7 +6,7 @@ export default class EducationService{
         return axios.get("http://localhost:8080/api/education/getallsorted")
     }
 
-    getByResumeById(id){
+    getByResumeId(id){
         return axios.get("http://localhost:8080/api/education/findByResumeId?id="+id)
     }
 

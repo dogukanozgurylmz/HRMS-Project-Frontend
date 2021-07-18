@@ -6,7 +6,7 @@ export default class JobExperienceService{
         return axios.get("http://localhost:8080/api/jobexperiences/getallsorted")
     }
 
-    getByResumeById(id){
+    getByResumeId(id){
         return axios.get("http://localhost:8080/api/jobexperiences/findByResumeId?id="+id)
     }
 
@@ -16,6 +16,10 @@ export default class JobExperienceService{
 
     update(jobExperience){
         return axios.post("http://localhost:8080/api/jobexperiences/update",jobExperience)
+    }
+
+    delete(id){
+        return axios.post("http://localhost:8080/api/jobexperiences/delete?id="+id)
     }
 
 }

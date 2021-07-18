@@ -4,15 +4,21 @@ import React, { useState } from 'react'
 import { Message, Grid, Modal, Segment, Icon, Button } from "semantic-ui-react";
 import { Form } from 'formik-semantic-ui';
 import ResumeService from '../../../services/resumeService';
-import { toast } from "react-toastify"
+import { useDispatch } from 'react-redux';
+import { resumeUpdate } from '../../../store/actions/resumeActions';
 
 export default function ResumeInfosUpdate({ resume }) {
 
     const [open, setOpen] = useState(false)
 
+    const dispatch = useDispatch()
+
     const formik = useFormik({
         initialValues: {
             id: resume.id,
+            candidateUser:{
+                id:resume.candidateUser?.id
+            },
             githubLink: resume.githubLink,
             linkedLink: resume.linkedLink,
             description: resume.description,
@@ -24,22 +30,11 @@ export default function ResumeInfosUpdate({ resume }) {
             description: Yup.string()
         }),
         onSubmit: (values) => {
-            let resumeModel = {
-                id: resume.id,
-                candidateUser: {
-                    id: resume.candidateUser?.id
-                },
-                githubLink: values.githubLink,
-                linkedLink: values.linkedLink,
-                description: values.description,
-                photo: resume.photo
-            }
-            let resumeService = new ResumeService()
-            resumeService.update(resumeModel).then(result => result.data.data)
-            toast.success(`Resume head updated`)
+            dispatch(resumeUpdate(values))
             setOpen(false)
         }
     })
+    
 
     return (
         <div>
@@ -48,7 +43,7 @@ export default function ResumeInfosUpdate({ resume }) {
                 onClose={() => setOpen(false)}
                 onOpen={() => setOpen(true)}
                 open={open}
-                trigger={<Button color="orange" size="mini" icon="undo"></Button>}
+                trigger={<Button fluid color="orange" size="mini" icon="undo"></Button>}
             >
                 <Modal.Header>Update</Modal.Header>
                 <Modal.Content>

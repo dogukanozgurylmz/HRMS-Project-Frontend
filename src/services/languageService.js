@@ -6,7 +6,7 @@ export default class LanguageService{
         return axios.get("http://localhost:8080/api/languages/getall")
     }
 
-    getByResumeById(id){
+    getByResumeId(id){
         return axios.get("http://localhost:8080/api/languages/findByResumeId?id="+id)
     }
 
@@ -16,6 +16,10 @@ export default class LanguageService{
 
     update(language){
         return axios.post("http://localhost:8080/api/languages/update",language)
+    }
+
+    delete(id){
+        return axios.post("http://localhost:8080/api/languages/delete?id="+id)
     }
 
 }

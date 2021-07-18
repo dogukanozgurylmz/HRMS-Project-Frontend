@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Header, Modal, Button, Grid, Segment, Icon, Menu, Label, Rating, Divider, Item, Input } from 'semantic-ui-react'
+import { Header, Modal, Button, Grid, Segment, Icon, Menu, Label, Rating, Divider, Item } from 'semantic-ui-react'
 import LanguageUpdate from './LanguageUpdate'
 import NewLanguage from "../post/NewLanguage"
 import TechnologyUpdate from './TechnologyUpdate'
@@ -9,10 +9,15 @@ import NewEducation from "../post/NewEducation"
 import JobExperienceUpdate from "./JobExperienceUpdate"
 import NewJobExperience from "../post/NewJobExperience"
 import ResumeInfosUpdate from './ResumeInfosUpdate'
-import { useSelector } from 'react-redux'
 import EducationDelete from '../delete/EducationDelete'
+import JobExperienceDelete from '../delete/JobExperienceDelete'
+import TechnologyDelete from '../delete/TechnologyDelete'
+import LanguageDelete from '../delete/LanguageDelete'
+import { useParams } from 'react-router-dom'
 
 export default function ResumeUpdate({ resume, technologies, educations, languages, jobExperiences }) {
+
+    let { id } = useParams()
 
     const [open, setOpen] = useState(false)
 
@@ -49,29 +54,35 @@ export default function ResumeUpdate({ resume, technologies, educations, languag
                                 <Header textAlign="left">Technologies</Header>
                                 <Segment>
                                     {technologies.map(technology => (
-                                        <Item.Group key={technology.id}>
-                                            <Item>
-                                                <Item.Content><Label color="blue"> {technology.description}</Label></Item.Content>
-                                                <TechnologyUpdate resumeId={resume.id} technology={technology} />
-                                            </Item>
-                                        </Item.Group>
+                                        <Segment>
+                                            <Item.Group key={technology.id}>
+                                                <Item>
+                                                    <Item.Content><Label color="blue"> {technology.description}</Label></Item.Content>
+                                                    <TechnologyUpdate resumeId={id} technology={technology} />
+                                                    <TechnologyDelete technology={technology} />
+                                                </Item>
+                                            </Item.Group>
+                                        </Segment>
                                     ))}
-                                    <NewTechnology resumeId={resume.id} />
+                                    <NewTechnology resumeId={id} />
                                 </Segment>
                             </Grid.Column>
                             <Grid.Column width={8}>
                                 <Header textAlign="left">Languages</Header>
                                 <Segment>
                                     {languages.map(language => (
-                                        <Item.Group key={language.id}>
-                                            <Item>
-                                                <Item.Content><Label color="blue">{language.language}</Label></Item.Content>
-                                                <Item.Content><Label><Rating disabled defaultRating={language.langLevel} maxRating={3} /></Label></Item.Content>
-                                                <LanguageUpdate resumeId={resume.id} language={language} />
-                                            </Item>
-                                        </Item.Group>
+                                        <Segment>
+                                            <Item.Group key={language.id}>
+                                                <Item>
+                                                    <Item.Content><Label color="blue">{language.language}</Label></Item.Content>
+                                                    <Item.Content><Label><Rating disabled defaultRating={language.langLevel} maxRating={3} /></Label></Item.Content>
+                                                    <LanguageUpdate resumeId={id} language={language} />
+                                                    <LanguageDelete language={language} />
+                                                </Item>
+                                            </Item.Group>
+                                        </Segment>
                                     ))}
-                                    <NewLanguage resumeId={resume.id} />
+                                    <NewLanguage resumeId={id} />
                                 </Segment>
                             </Grid.Column>
                         </Grid.Row>
@@ -90,12 +101,13 @@ export default function ResumeUpdate({ resume, technologies, educations, languag
                                                         <Item.Description>Started Date: {jobExperience.startedDate}</Item.Description>
                                                         {jobExperience.endedDate == null ? <Item.Description>Devam ediyor</Item.Description> : <Item.Description>Job departure date: {jobExperience.endedDate}</Item.Description>}
                                                     </Item.Content>
-                                                    <JobExperienceUpdate jobExperience={jobExperience} resumeId={resume.id} />
+                                                    <JobExperienceUpdate jobExperience={jobExperience} resumeId={id} />
+                                                    <JobExperienceDelete jobExperience={jobExperience} />
                                                 </Item>
                                             </Item.Group>
                                         </Segment>
                                     ))}
-                                    <NewJobExperience resumeId={resume.id} />
+                                    <NewJobExperience resumeId={id} />
                                 </Segment>
                             </Grid.Column>
                         </Grid.Row>
@@ -114,13 +126,13 @@ export default function ResumeUpdate({ resume, technologies, educations, languag
                                                         <Item.Description>Started Date: {education.startedDate}</Item.Description>
                                                         {education.endedDate == null ? <Item.Description>Devam ediyor</Item.Description> : <Item.Description>Job departure date: {education.endedDate}</Item.Description>}
                                                     </Item.Content>
-                                                    <EducationUpdate resumeId={resume.id} education={education} />
+                                                    <EducationUpdate resumeId={id} education={education} />
                                                     <EducationDelete education={education} />
                                                 </Item>
                                             </Item.Group>
                                         </Segment>
                                     ))}
-                                    <NewEducation resumeId={resume.id} />
+                                    <NewEducation resumeId={id} />
                                 </Segment>
                             </Grid.Column>
                         </Grid.Row>

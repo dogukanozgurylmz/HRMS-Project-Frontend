@@ -1,4 +1,4 @@
-import { ADD_RESUME, GET_RESUME_BY_ID, UPDATE_RESUME } from "../actions/resumeActions";
+import { GET_BY_ID_SUCCESS, RESUME_UPDATE_SUCCESS } from "../actions/resumeActions";
 import { resume } from "../initialValues/resumes"
 
 const initialState = {
@@ -7,20 +7,15 @@ const initialState = {
 
 export default function resumeReducer(state = initialState, { type, payload }) {
     switch (type) {
-        case GET_RESUME_BY_ID:
+        case GET_BY_ID_SUCCESS:
             return {
                 ...state,
                 resume: payload
             }
-        case ADD_RESUME:
+        case RESUME_UPDATE_SUCCESS:
             return {
                 ...state,
-                resume: payload
-            }
-        case UPDATE_RESUME:
-            return {
-                ...state,
-                resume: payload
+                resume: { ...state.resume, payload }
             }
         default:
             return state;

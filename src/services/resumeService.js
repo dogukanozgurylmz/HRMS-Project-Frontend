@@ -15,7 +15,7 @@ export default class ResumeService{
     }
 
     update(resume){
-        return axios.post("http://localhost:8080/api/resumes/update",resume)
+        return axios.put("http://localhost:8080/api/resumes/update",resume)
     }
 
     saveImage(file,resumeId){

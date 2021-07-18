@@ -8,34 +8,30 @@ import { useParams } from 'react-router-dom'
 import ResumeUpdate from '../update/ResumeUpdate'
 import { useDispatch, useSelector } from 'react-redux'
 import ResumeService from '../../../services/resumeService'
-import { getResumeById } from '../../../store/actions/resumeActions'
+import { getById } from '../../../store/actions/resumeActions'
+import { getByResumeId } from '../../../store/actions/technologyActions'
 
 export default function ResumeDetail() {
 
     let { id } = useParams()
 
-    const [resume, setResume] = useState({})
-    const [technologies, setTechnologies] = useState([])
+    //const [resume, setResume] = useState({})
+    //const [technologies, setTechnologies] = useState([])
     const [languages, setLanguages] = useState([])
     const [jobExperiences, setJobExperiences] = useState([])
     const [educations, setEducations] = useState([])
-    
-    //const resume = useSelector(state => state.resume.resume)
-    //const dispatch = useDispatch()
+
+    const resume = useSelector(state => state.resume.resume)
+    const technologies = useSelector(state => state.technology)
+    const dispatch = useDispatch()
 
     useEffect(() => {
-        let resumeService = new ResumeService()
-        resumeService.getById(id).then(result=>setResume(result.data.data))
-        let technologyService = new TechnologyService()
-        technologyService.getByResumeById(id).then(result => setTechnologies(result.data.data))
-        let languageService = new LanguageService()
-        languageService.getByResumeById(id).then(result => setLanguages(result.data.data))
-        let jobExperienceService = new JobExperiencesService()
-        jobExperienceService.getByResumeById(id).then(result => setJobExperiences(result.data.data))
-        let educationService = new EducationService()
-        educationService.getByResumeById(id).then(result => setEducations(result.data.data))
+        dispatch(getById(id)) //resume
+        dispatch(getByResumeId(id)) //technology
+        
+        
         console.log(id)
-    }, [id])
+    }, [id,dispatch])
 
     return (
         <div>
@@ -65,7 +61,7 @@ export default function ResumeDetail() {
                         <Grid.Column width={8}>
                             <Header textAlign="left">Technologies</Header>
                             <Segment>
-                                {technologies.map(technology => (
+                                {technologies.technologies.map(technology => (
                                     <Label key={technology.id} size="large" > {technology.description}</Label>
                                 ))}
                             </Segment>
@@ -104,7 +100,7 @@ export default function ResumeDetail() {
                                 ))}
                             </Segment>
                         </Grid.Column>
-                        <Grid.Column width={8}> 
+                        <Grid.Column width={8}>
                             <Header textAlign="left">Educations</Header>
                             <Segment>
                                 {educations.map(education => (
@@ -128,7 +124,7 @@ export default function ResumeDetail() {
                     </Grid.Row>
                 </Grid>
             </Segment>
-            <ResumeUpdate educations={educations} jobExperiences={jobExperiences} languages={languages} resume={resume} technologies={technologies} />
+            <ResumeUpdate educations={educations} jobExperiences={jobExperiences} languages={languages} resume={resume} technologies={technologies.technologies} />
         </div >
     )
 }

@@ -5,14 +5,19 @@ import TechnologyService from '../../../services/technologyService';
 import { Form } from 'formik-semantic-ui';
 import { Message, Modal, Button, Label } from "semantic-ui-react";
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { technologyUpdate } from '../../../store/actions/technologyActions';
 
 export default function TechnologyUpdate({ resumeId, technology }) {
 
+    const dispatch = useDispatch()
+
     const formik = useFormik({
+        enableReinitialize: true,
         initialValues: {
             description: technology.description,
-            resumeId: "",
-            technologyId: ""
+            resumeId:resumeId,
+            technologyId: technology.id
         },
         validationSchema: Yup.object({
             description: Yup.string().required("Technology is not null"),
@@ -20,9 +25,7 @@ export default function TechnologyUpdate({ resumeId, technology }) {
         onSubmit: (values) => {
             let technologyModel = {
                 id: technology.id,
-                resume: {
-                    id: resumeId
-                },
+                resumeId: resumeId,
                 description: values.description
             }
             let technologyService = new TechnologyService()
