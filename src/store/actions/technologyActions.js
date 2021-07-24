@@ -8,8 +8,8 @@ export const TECHNOLOGY_DELETE_SUCCESS = "TECHNOLOGY_DELETE_SUCCESS"
 
 let technologyService = new TechnologyService()
 
-export const getByResumeId = (resumeId) => (dispatch) => {
-    technologyService.getByResumeId(resumeId).then(result =>
+export const getTechnologyByResumeId = (resumeId) => async (dispatch) => {
+    await technologyService.getByResumeId(resumeId).then(result =>
         dispatch({
             type: GET_BY_RESUME_ID_SUCCESS,
             payload: result.data.data

@@ -1,36 +1,43 @@
 import React, { useEffect, useState } from 'react'
 import { Grid, Segment, Image, Header, Icon, Menu, Label, Rating, Divider, Item } from 'semantic-ui-react'
-import TechnologyService from '../../../services/technologyService'
-import LanguageService from '../../../services/languageService'
-import EducationService from '../../../services/educationService'
-import JobExperiencesService from '../../../services/jobExperienceService'
 import { useParams } from 'react-router-dom'
 import ResumeUpdate from '../update/ResumeUpdate'
 import { useDispatch, useSelector } from 'react-redux'
-import ResumeService from '../../../services/resumeService'
 import { getById } from '../../../store/actions/resumeActions'
-import { getByResumeId } from '../../../store/actions/technologyActions'
+import { getTechnologyByResumeId } from '../../../store/actions/technologyActions'
+import { getLanguageByResumeId } from '../../../store/actions/languageActions'
+import ResumeService from '../../../services/resumeService'
 
 export default function ResumeDetail() {
 
     let { id } = useParams()
-
-    //const [resume, setResume] = useState({})
-    //const [technologies, setTechnologies] = useState([])
-    const [languages, setLanguages] = useState([])
+    
+    const [resume, setResume] = useState({})
     const [jobExperiences, setJobExperiences] = useState([])
     const [educations, setEducations] = useState([])
 
-    const resume = useSelector(state => state.resume.resume)
+    //const resume = useSelector(state => state.resume.resume)
     const technologies = useSelector(state => state.technology)
+    const languages = useSelector(state => state.language)
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(getById(id)) //resume
-        dispatch(getByResumeId(id)) //technology
-        
-        
+        let resumeService = new ResumeService()
+        resumeService.getById(id).then(result=>setResume(result.data.data))
+        resume_(resume)
         console.log(id)
+    }, [id])
+
+    let resume_ =(resume)=>{
+        setResume(resume)
+    }
+
+    useEffect(() => {
+        dispatch(getLanguageByResumeId(id))
+    }, [id,dispatch])
+
+    useEffect(() => {
+        dispatch(getTechnologyByResumeId(id)) 
     }, [id,dispatch])
 
     return (
@@ -69,7 +76,7 @@ export default function ResumeDetail() {
                         <Grid.Column width={8}>
                             <Header textAlign="left">Languages</Header>
                             <Segment>
-                                {languages.map(language => (
+                                {languages.languages.map(language => (
                                     <Label key={language.id} size="large" >
                                         {language.language}<br />
                                         <Rating disabled defaultRating={language.langLevel} maxRating={3} />
@@ -124,7 +131,7 @@ export default function ResumeDetail() {
                     </Grid.Row>
                 </Grid>
             </Segment>
-            <ResumeUpdate educations={educations} jobExperiences={jobExperiences} languages={languages} resume={resume} technologies={technologies.technologies} />
+            <ResumeUpdate educations={educations} jobExperiences={jobExperiences} languages={languages.languages} resume={resume} technologies={technologies.technologies} />
         </div >
     )
 }

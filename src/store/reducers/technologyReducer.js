@@ -1,4 +1,4 @@
-import { GET_BY_RESUME_ID_SUCCESS, TECHNOLOGY_UPDATE_SUCCESS } from "../actions/technologyActions";
+import { GET_BY_RESUME_ID_SUCCESS, TECHNOLOGY_ADD_SUCCESS } from "../actions/technologyActions";
 import { technologies, technology } from "../initialValues/technologies"
 
 const initialState = {
@@ -13,7 +13,7 @@ export default function technologyReducer(state = initialState, { type, payload 
                 ...state,
                 technologies: payload
             }
-        case TECHNOLOGY_UPDATE_SUCCESS:
+        case TECHNOLOGY_ADD_SUCCESS:
             return {
                 ...state,
                 technology: { ...state.technology, payload }

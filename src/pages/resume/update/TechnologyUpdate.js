@@ -5,12 +5,12 @@ import TechnologyService from '../../../services/technologyService';
 import { Form } from 'formik-semantic-ui';
 import { Message, Modal, Button, Label } from "semantic-ui-react";
 import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
-import { technologyUpdate } from '../../../store/actions/technologyActions';
+//import { useDispatch } from 'react-redux';
+//import { technologyUpdate } from '../../../store/actions/technologyActions';
 
 export default function TechnologyUpdate({ resumeId, technology }) {
 
-    const dispatch = useDispatch()
+    //const dispatch = useDispatch()
 
     const formik = useFormik({
         enableReinitialize: true,

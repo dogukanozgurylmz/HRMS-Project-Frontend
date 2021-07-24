@@ -3,7 +3,6 @@ import * as Yup from "yup";
 import React, { useState } from 'react'
 import { Message, Grid, Modal, Segment, Icon, Button } from "semantic-ui-react";
 import { Form } from 'formik-semantic-ui';
-import ResumeService from '../../../services/resumeService';
 import { useDispatch } from 'react-redux';
 import { resumeUpdate } from '../../../store/actions/resumeActions';
 
